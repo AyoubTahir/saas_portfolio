@@ -28,7 +28,6 @@ class ExpertisesRequest extends FormRequest
             'title_en'          => 'required',
             'description_ar'    => 'required',
             'description_en'    => 'required',
-            'image'             => 'required',
             'status'            => 'required',
         ];
     }

@@ -24,7 +24,6 @@ class CreateResumeFieldsTable extends Migration
             $table->string('desc_en');
             $table->date('date_from');
             $table->date('date_to');
-            $table->string('icon');
             $table->timestamps();
 
             $table->foreign('resume_id')->references('id')->on('resumes')->onDelete('cascade');

@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\site\HomeController;
 use App\Http\Controllers\Admin\UsersController;
 use App\Http\Controllers\site\LanguageController;
+use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\HeroSectionController;
 use App\Http\Controllers\Admin\AboutSectionController;
@@ -19,7 +20,7 @@ Route::get('/lang', [LanguageController::class, 'switchLang']);
 Route::get('/{username}', [HomeController::class, 'index']);
 
 //admin
-Route::prefix('t-admin')->middleware('auth')->group(function () {
+Route::prefix('t-admin')->group(function () {
 
     //dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -66,11 +67,34 @@ Route::prefix('t-admin')->middleware('auth')->group(function () {
     Route::get('/expertises', [ExpertisesSectionController::class, 'expertisesSection'])->name('home.expertises');
     Route::post('/expertises/update', [ExpertisesSectionController::class, 'updateExpertisesSection'])->name('home.expertises.updatesection');
     Route::post('/expertises/store', [ExpertisesSectionController::class, 'storeExpertises'])->name('home.expertises.store');
+    Route::get('/expertises/show/{id}', [ExpertisesSectionController::class, 'showExpertises'])->name('home.expertises.show');
     Route::get('/expertises/edit/{id}', [ExpertisesSectionController::class, 'editExpertises'])->name('home.expertises.edit');
     Route::post('/expertises/update/{id}', [ExpertisesSectionController::class, 'updateExpertises'])->name('home.expertises.update');
     Route::post('/expertises/delete/{id}', [ExpertisesSectionController::class, 'deleteExpertises'])->name('home.expertises.delete');
     Route::post('/expertises/destroy', [ExpertisesSectionController::class, 'destroyExpertises'])->name('home.expertises.destroy');
 
+    Route::post('/expertises/skills/store', [ExpertisesSectionController::class, 'storeSkillExpertises'])->name('home.skills.store');
+    Route::get('/expertises/skills/edit/{id}', [ExpertisesSectionController::class, 'editSkillExpertises'])->name('home.skills.edit');
+    Route::post('/expertises/skills/update/{id}', [ExpertisesSectionController::class, 'updateSkillExpertises'])->name('home.skills.update');
+    Route::post('/expertises/skills/delete/{id}', [ExpertisesSectionController::class, 'deleteSkillExpertises'])->name('home.skills.delete');
+    Route::post('/expertises/skills/destroy', [ExpertisesSectionController::class, 'destroySkillExpertises'])->name('home.skills.destroy');
+
+    //categories
+    Route::get('/portfolio/categories', [CategoryController::class, 'index'])->name('portfolio.categories.index');
+    Route::post('/portfolio/categories/store', [CategoryController::class, 'store'])->name('portfolio.categories.store');
+    Route::get('/portfolio/categories/edit/{id}', [CategoryController::class, 'edit'])->name('portfolio.categories.edit');
+    Route::post('/portfolio/categories/update/{id}', [CategoryController::class, 'update'])->name('portfolio.categories.update');
+    Route::post('/portfolio/categories/delete/{id}', [CategoryController::class, 'delete'])->name('portfolio.categories.delete');
+    Route::post('/portfolio/categories/destroy', [CategoryController::class, 'destroy'])->name('portfolio.categories.destroy');
+
+    //projects
+    Route::get('/portfolio/projects', [ProjectController::class, 'index'])->name('portfolio.projects.index');
+    Route::get('/portfolio/projects/create', [ProjectController::class, 'create'])->name('portfolio.projects.create');
+    Route::post('/portfolio/projects/store', [ProjectController::class, 'store'])->name('portfolio.projects.store');
+    Route::get('/portfolio/projects/edit/{id}', [ProjectController::class, 'edit'])->name('portfolio.projects.edit');
+    Route::post('/portfolio/projects/update/{id}', [ProjectController::class, 'update'])->name('portfolio.projects.update');
+    Route::post('/portfolio/projects/delete/{id}', [ProjectController::class, 'delete'])->name('portfolio.projects.delete');
+    Route::post('/portfolio/projects/destroy', [ProjectController::class, 'destroy'])->name('portfolio.projects.destroy');
 
     //users
     Route::get('/users', [UsersController::class, 'index'])->name('users');

@@ -29,7 +29,7 @@
             </li>
 
             <li class="menu">
-                <a href="#ecommerceg" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                <a href="#homepage" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <i class="flaticon-home-line"></i>
                         <span>Home Page</span>
@@ -38,7 +38,7 @@
                         <i class="flaticon-right-arrow"></i>
                     </div>
                 </a>
-                <ul class="collapse submenu list-unstyled" id="ecommerceg" data-parent="#accordionExample">
+                <ul class="collapse submenu list-unstyled" id="homepage" data-parent="#accordionExample">
                     <li>
                         <a href="{{route('home.hero')}}"> Hero Section </a>
                     </li>
@@ -61,6 +61,23 @@
                         <a href="{{route('home.expertises')}}"> Expertise Section </a>
                     </li>
                     <li>
+                </ul>
+            </li>
+
+            <li class="menu">
+                <a href="#portfolio" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
+                    <div class="">
+                        <i class="flaticon-home-line"></i>
+                        <span>Portfolio</span>
+                    </div>
+                    <div>
+                        <i class="flaticon-right-arrow"></i>
+                    </div>
+                </a>
+                <ul class="collapse submenu list-unstyled" id="portfolio" data-parent="#accordionExample">
+                    <li>
+                        <a href="{{route('portfolio.categories.index')}}"> Categories </a>
+                    </li>
                 </ul>
             </li>
 

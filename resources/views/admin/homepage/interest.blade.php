@@ -306,7 +306,7 @@
             }).then(function(result) {
                 if (result.value) {
                     console.log(fom_id);
-                    //document.getElementById(fom_id).submit();
+                    document.getElementById(fom_id).submit();
                 }
             })
         }

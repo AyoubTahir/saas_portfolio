@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Models\Resume;
+use App\Services\Perform;
 use App\Models\ResumeField;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
@@ -15,40 +16,22 @@ class ResumesSectionController extends Controller
 {
     public function resumesSection()
     {
-        $resume = Resume::where('user_id', Auth::id())->with('resumesField')->first();
+        $resume = Perform::index(Resume::class, 'resumesField');
 
         return view('admin.homepage.resume', compact(['resume']));
     }
 
     public function updateResumesSection(ResumesRequest $request)
     {
-        $currentUserResumes =  Resume::where('user_id', Auth::id())->first();
-
-        $request['user_id'] = Auth::id();
-
-        $data = $request->only($this->resumesFields());
-
-        if ($currentUserResumes) {
-            (new SaveModel($currentUserResumes, $data))->execute();
-        } else {
-            (new SaveModel(new Resume(), $data))->execute();
-        }
+        Perform::update(Resume::class, $request);
 
         return redirect()->route('home.resumes')->with(['success' => 'changed updated successfully']);
     }
 
     public function storeResumes(ResumesFieldsRequest $request)
     {
-        $currentUserResumes =  Resume::where('user_id', Auth::id())->first();
 
-        if ($currentUserResumes) {
-            $request['resume_id'] = $currentUserResumes->id;
-            $request['icon'] = 'fffff';
-
-            $data = $request->only($this->resumesFieldFields());
-
-            (new SaveModel(new ResumeField(), $data))->execute();
-        }
+        Perform::store(Resume::class, ResumeField::class, $request, 'resume_id');
 
         return redirect()->route('home.resumes')->with(['success' => 'changed updated successfully']);
     }
@@ -74,33 +57,5 @@ class ResumesSectionController extends Controller
         ResumeField::destroy($request->ids);
 
         return redirect()->route('home.resumes')->with(['success' => 'resumes Fields has been deleted.']);
-    }
-
-    private function resumesFields()
-    {
-        return [
-            'user_id',
-            'title_ar',
-            'title_en',
-            'description_ar',
-            'description_en',
-            'status'
-        ];
-    }
-
-    private function resumesFieldFields()
-    {
-        return [
-            'resume_id',
-            'name_ar',
-            'name_en',
-            'job_ar',
-            'job_en',
-            'desc_ar',
-            'desc_en',
-            'date_from',
-            'date_to',
-            'icon'
-        ];
     }
 }

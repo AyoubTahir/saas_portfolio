@@ -28,7 +28,6 @@ class ResumeField extends Model implements SaveableInterface
             'desc_en'           => StringField::new(),
             'date_from'         => DateField::new(),
             'date_to'           => DateField::new(),
-            'icon'              => StringField::new(),
         ];
     }
 

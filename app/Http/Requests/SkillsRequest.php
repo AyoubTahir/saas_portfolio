@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class FactsRequest extends FormRequest
+class SkillsRequest extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,10 +24,10 @@ class FactsRequest extends FormRequest
     public function rules()
     {
         return [
-            'title_ar'          => 'required',
-            'title_en'          => 'required',
-            'cover'             => 'mimes:png,jpg',
-            'status'            => 'required',
+            'expertise_field_id' => 'required',
+            'skill_ar' => 'required',
+            'skill_en' => 'required',
+            'lvl' => 'required|integer'
         ];
     }
 }

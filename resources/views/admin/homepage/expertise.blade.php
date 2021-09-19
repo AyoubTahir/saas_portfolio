@@ -88,8 +88,8 @@
                                             <label class="custom-control-label" for="user-{{ $field->id }}"></label>
                                             </div>
                                         </td>
-                                        <td>{{ $field->name_ar }}</td>
-                                        <td>{{ $field->name_en }}</td>
+                                        <td><a href="{{ route('home.expertises.show',$field->id) }}">{{ $field->name_ar }}</a></td>
+                                        <td><a href="{{ route('home.expertises.show',$field->id) }}">{{ $field->name_en }}</a></td>
                                         <td>{{ $field->created_at }}</td>
                                         <td class="text-center">
                                             <div class="dropdown custom-dropdown">
@@ -114,6 +114,101 @@
                                     <th>#</th>
                                     <th>Title Ar</th>
                                     <th>Ttitle En</th>
+                                    <th>Created</th>
+                                    <th class="align-center">Action</th>
+                                </tr>
+                            </tfoot>
+                        </table>
+                    </form>
+                </div>
+            </div>
+            <div class="widget-content widget-content-area text-center p-0">
+
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="row" id="cancel-row" style="{{ $expertise != '' && count($expertise ->expertisesField) > 0 ? '' : 'display: none' }}">
+    <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12 layout-spacing">
+        <div class="statbox widget box box-shadow">
+            <div class="widget-header">
+                <div class="row">
+                    <div class="col-xl-6 col-md-6 col-sm-12 col-12">
+                        <h4>Skills Details </h4>
+                    </div>
+                    <div class="col-xl-6 col-md-6 col-sm-12 col-12 d-flex align-items-center justify-content-end">
+                        <button id="openModalskill" class="btn btn-success btn-lg mr-3" data-toggle="modal" data-target="#addskill">
+                            <i class="flaticon-circle-plus mr-1"></i>
+                            Add Skill
+                        </button>
+                        <button class="btn btn-danger btn-lg mr-3 d-none" id="delete-fields2" onclick="deleteTable('table-form2')">
+                            <i class="flaticon-delete mr-1"></i>
+                            Delete Skills
+                        </button>
+                    </div>
+                </div>
+            </div>
+            <div class="widget-content widget-content-area pb-0">
+                <div class="table-responsive mb-4">
+                    <form id="table-form2" action="{{ route('home.skills.destroy') }}" method="POST">
+                        <table class="table table-bordered mb-4">
+                            <thead>
+                                <tr>
+                                    <th class="checkbox-column" style="width: 1rem;">
+                                        <div class="custom-control custom-checkbox checkbox-primary">
+                                        <input type="checkbox" class="custom-control-input todochkbox2" id="todoAll2">
+                                        <label class="custom-control-label" for="todoAll2"></label>
+                                        </div>
+                                    </th>
+                                    <th>Skill Ar</th>
+                                    <th>Skill En</th>
+                                    <th>Level</th>
+                                    <th>Created</th>
+                                    <th class="align-center">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @if ($expertise && $expertise->expertisesfield)
+                                    @foreach ( $expertise->expertisesfield as $field )
+                                        @foreach ( $field->skills as $skill)
+                                            <tr>
+                                                <td class="checkbox-column">
+                                                    <div class="custom-control custom-checkbox checkbox-primary">
+                                                    <input type="checkbox" name="ids[]" value="{{ $skill->id }}" class="custom-control-input todochkbox2" id="user-{{ $skill->id }}">
+                                                    <label class="custom-control-label" for="user-{{ $skill->id }}"></label>
+                                                    </div>
+                                                </td>
+                                                <td>{{ $skill->skill_ar }}</td>
+                                                <td>{{ $skill->skill_en }}</td>
+                                                <td>{{ $skill->lvl }}</td>
+                                                <td>{{ $skill->created_at }}</td>
+                                                <td class="text-center">
+                                                    <div class="dropdown custom-dropdown">
+                                                        <a class="dropdown-toggle" href="#" role="button" id="dropdownMenuLink1" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                            <i class="flaticon-dot-three fs-17"></i>
+                                                        </a>
+                                                        <div class="dropdown-menu" aria-labelledby="dropdownMenuLink1">
+                                                            <a class="dropdown-item" href="{{ route('home.skills.edit',$skill->id) }}">Edit</a>
+                                                            <a class="dropdown-item" href="javascript:void(0);" onclick="deleteTable('delete-field-{{ $skill->id }}-form2')">Delete</a>
+                                                            <form id="delete-field-{{ $skill->id }}-form2" action="{{ route('home.skills.delete',$skill->id) }}" method="POST" class="d-none">
+                                                                @csrf
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </td>
+                                            </tr>
+                                        @endforeach
+
+                                    @endforeach
+                                @endif
+                            </tbody>
+                            <tfoot>
+                                <tr>
+                                    <th>#</th>
+                                    <th>Skill Ar</th>
+                                    <th>Skill En</th>
+                                    <th>Level</th>
                                     <th>Created</th>
                                     <th class="align-center">Action</th>
                                 </tr>
@@ -249,6 +344,7 @@
                             <div class="form-group">
                                 <label for="name-ar">Arabic Expertise Title</label>
                                 <input type="text" name="name_ar" value="{{ old('name_ar') }}" class="form-control {{ $errors->has('name_ar') ? 'mb-1' : 'mb-4'}}" id="name-ar">
+                                <input type="hidden" name="is_modal" value="yes_modal">
                                 @error('name_ar')
                                     <span class="invalid-feedback" style="display: inline-block" role="alert">
                                         <strong>{{ $message }}</strong>
@@ -261,6 +357,84 @@
                                 <label for="name-en">English Expertise Title</label>
                                 <input type="text" name="name_en" value="{{ old('name_en') }}" class="form-control {{ $errors->has('name_en') ? 'mb-1' : 'mb-4'}}" id="name-en">
                                 @error('name_en')
+                                    <span class="invalid-feedback" style="display: inline-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary mt-3 mb-3">Save changes</button>
+                    <button type="button" class="btn btn-dark mt-3 mb-3" data-dismiss="modal">Close</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="addskill" tabindex="-1" role="dialog" aria-labelledby="addskillLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <form method="POST" action="{{ route('home.skills.store') }}">
+                @csrf
+                <div class="modal-header">
+                    <h5 class="modal-title" id="formInputModalLabel">Add New Skill</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="row">
+                        <div class="col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label for="skill-ar">Arabic Skill</label>
+                                <input type="text" name="skill_ar" value="{{ old('skill_ar') }}" class="form-control {{ $errors->has('skill_ar') ? 'mb-1' : 'mb-4'}}" id="skill-ar">
+                                <input type="hidden" name="is_modal_skill" value="yes_modal">
+                                @error('skill_ar')
+                                    <span class="invalid-feedback" style="display: inline-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                        <div class="col-lg-6 col-md-12">
+                            <div class="form-group">
+                                <label for="skill-en">English Skill</label>
+                                <input type="text" name="skill_en" value="{{ old('skill_en') }}" class="form-control {{ $errors->has('skill_en') ? 'mb-1' : 'mb-4'}}" id="skill-en">
+                                @error('skill_en')
+                                    <span class="invalid-feedback" style="display: inline-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="lvl">Skill LvL</label>
+                                <input type="text" name="lvl" value="{{ old('lvl') }}" class="form-control {{ $errors->has('lvl') ? 'mb-1' : 'mb-4'}}" id="lvl">
+                                @error('lvl')
+                                    <span class="invalid-feedback" style="display: inline-block" role="alert">
+                                        <strong>{{ $message }}</strong>
+                                    </span>
+                                @enderror
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-lg-12">
+                            <div class="form-group">
+                                <label for="expertise">Expertises</label>
+                                <select class="form-control" name="expertise_field_id" id="expertise">
+                                    @foreach ($expertise->expertisesField as $field)
+                                        <option value="{{$field->id}}">{{$field->name_ar}} - {{$field->name_en}}</option>
+                                    @endforeach
+                                </select>
+                                @error('status')
                                     <span class="invalid-feedback" style="display: inline-block" role="alert">
                                         <strong>{{ $message }}</strong>
                                     </span>
@@ -292,6 +466,7 @@
     </script>
     <script>
         checkall('todoAll', 'todochkbox');
+        checkall('todoAll2', 'todochkbox2');
         $('[data-toggle="tooltip"]').tooltip();
 
         function deleteTable(fom_id)
@@ -323,11 +498,26 @@
             }
         });
 
+        $('.todochkbox2').on('click', function () {
+            if($('.todochkbox2:checkbox:checked').length > 1)
+            {
+                $('#delete-fields2').removeClass('d-none')
+            }
+            else{
+                $('#delete-fields2').addClass('d-none')
+            }
+        });
+
     </script>
 
     @if (old('is_modal') == 'yes_modal')
         <script>
             $('#openModal').click();
+        </script>
+    @endif
+    @if (old('is_modal_skill') == 'yes_modal')
+        <script>
+            $('#openModalskill').click();
         </script>
     @endif
 @endpush

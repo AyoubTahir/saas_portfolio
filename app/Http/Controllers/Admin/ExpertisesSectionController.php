@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers\Admin;
 
+use App\Models\Skill;
 use App\Models\Expertise;
+use App\Services\Perform;
 use Illuminate\Http\Request;
 use App\Models\ExpertiseField;
 use App\Http\Controllers\Controller;
+use App\Http\Requests\SkillsRequest;
 use App\Support\SaveModel\SaveModel;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ExpertisesRequest;
@@ -15,40 +18,22 @@ class ExpertisesSectionController extends Controller
 {
     public function expertisesSection()
     {
-        $expertise = Expertise::where('user_id', Auth::id())->with('expertisesField')->first();
+        $expertise = Perform::index(Expertise::class, 'expertisesField.skills');
 
         return view('admin.homepage.expertise', compact(['expertise']));
     }
 
     public function updateExpertisesSection(ExpertisesRequest $request)
     {
-        $currentUserExpertises =  Expertise::where('user_id', Auth::id())->first();
-
-        $request['user_id'] = Auth::id();
-
-        $data = $request->only($this->expertisesFields());
-
-        if ($currentUserExpertises) {
-            (new SaveModel($currentUserExpertises, $data))->execute();
-        } else {
-            (new SaveModel(new expertise(), $data))->execute();
-        }
+        Perform::update(Expertise::class, $request);
 
         return redirect()->route('home.expertises')->with(['success' => 'changed updated successfully']);
     }
 
     public function storeExpertises(ExpertisesFieldsRequest $request)
     {
-        $currentUserExpertises =  Expertise::where('user_id', Auth::id())->first();
 
-        if ($currentUserExpertises) {
-            $request['expertise_id'] = $currentUserExpertises->id;
-            $request['icon'] = 'fffff';
-
-            $data = $request->only($this->expertisesFieldFields());
-
-            (new SaveModel(new ExpertiseField(), $data))->execute();
-        }
+        Perform::store(Expertise::class, ExpertiseField::class, $request, 'expertise_id');
 
         return redirect()->route('home.expertises')->with(['success' => 'changed updated successfully']);
     }
@@ -60,7 +45,7 @@ class ExpertisesSectionController extends Controller
         return redirect()->route('home.expertises')->with(['success' => 'expertises Field has been updated.']);
     }
 
-    public function deleteexpertises($id)
+    public function deleteExpertises($id)
     {
         $expertisesField = ExpertiseField::findorfail($id);
 
@@ -76,25 +61,51 @@ class ExpertisesSectionController extends Controller
         return redirect()->route('home.expertises')->with(['success' => 'expertises Fields has been deleted.']);
     }
 
-    private function expertisesFields()
+    public function storeSkillExpertises(SkillsRequest $request)
     {
-        return [
-            'user_id',
-            'title_ar',
-            'title_en',
-            'description_ar',
-            'description_en',
-            'image',
-            'status'
-        ];
+
+        $currentUserExpertise =  ExpertiseField::where('id', $request->expertise_field_id)->first();
+
+        if ($currentUserExpertise) {
+
+            $data = $request->only($this->skillsFields());
+
+            (new SaveModel(new Skill(), $data))->execute();
+        }
+
+        return redirect()->route('home.expertises')->with(['success' => 'changed updated successfully']);
     }
 
-    private function expertisesFieldFields()
+    public function editSkillExpertises($id)
+    {
+        $skillField = Skill::findorfail($id);
+
+        return redirect()->route('home.expertises')->with(['success' => 'expertises Field has been updated.']);
+    }
+
+    public function deleteSkillExpertises($id)
+    {
+        $skillField = Skill::findorfail($id);
+
+        $skillField->delete();
+
+        return redirect()->route('home.expertises')->with(['success' => 'expertises Field has been deleted.']);
+    }
+
+    public function destroySkillExpertises(Request $request)
+    {
+        Skill::destroy($request->ids);
+
+        return redirect()->route('home.expertises')->with(['success' => 'expertises Fields has been deleted.']);
+    }
+
+    private function skillsFields()
     {
         return [
-            'expertise_id',
-            'name_ar',
-            'name_en',
+            'expertise_field_id',
+            'skill_ar',
+            'skill_en',
+            'lvl',
         ];
     }
 }

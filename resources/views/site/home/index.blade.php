@@ -233,17 +233,17 @@
     <section class="cta-full border-top">
         <div class="container-fluid">
             <div class="row position-relative">
-                <div class="col-lg-4 padding-less img" style="background-image:url('{{ asset('assets/images/skills.jpg') }}')" data-jarallax='{"speed": 0.5}'></div><!-- end col -->
+                <div class="col-lg-4 padding-less img" style="background-image:url('{{ asset('uploads/'. $user->expertise->image) }}')" data-jarallax='{"speed": 0.5}'></div><!-- end col -->
                 <div class="col-lg-8 offset-lg-4">
                     <div class="cta-full-img-box">
                         <div class="row justify-content-center">
                             <div class="col-12 text-center">
                                 <div class="section-title">
                                     <div class="titles">
-                                        <h4 class="title title-line text-uppercase mb-4 pb-4">Work Expertise</h4>
+                                        <h4 class="title title-line text-uppercase mb-4 pb-4">{{$user->expertise['title_'.$lang]}}</h4>
                                         <span></span>
                                     </div>
-                                    <p class="text-muted mx-auto para-desc mb-0">Obviously I'm a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.</p>
+                                    <p class="text-muted mx-auto para-desc mb-0">{{$user->expertise['description_'.$lang]}}</p>
                                 </div>
                             </div><!--end col-->
                         </div><!--end row-->
@@ -251,106 +251,34 @@
                         <div class="row align-items-center">
                             <div class="col-lg-3 col-md-4 col-12">
                                 <ul class="nav nav-pills flex-column px-0" id="pills-tab" role="tablist">
+                                    @foreach ($user->expertise->expertisesField as $index=>$field)
                                     <li class="nav-item mt-4 pt-2">
-                                        <a class="nav-link rounded active" id="pills-cloud-tab" data-toggle="pill" href="#pills-cloud" role="tab" aria-controls="pills-cloud" aria-selected="false">
+                                        <a class="nav-link rounded {{$index == 0 ? 'active':''}}" id="pills-id{{$field->id}}-tab" data-toggle="pill" href="#pills-id{{$field->id}}" role="tab" aria-controls="pills-id{{$field->id}}" aria-selected="false">
                                             <div class="skill-container text-center pt-1 pb-1">
-                                                <h6 class="title mb-0">UX Design</h6>
+                                                <h6 class="title mb-0">{{$field['name_'.$lang]}}</h6>
                                             </div>
                                         </a><!--end nav link-->
                                     </li><!--end nav item-->
-
-                                    <li class="nav-item mt-4 pt-2">
-                                        <a class="nav-link rounded" id="pills-smart-tab" data-toggle="pill" href="#pills-smart" role="tab" aria-controls="pills-smart" aria-selected="false">
-                                            <div class="skill-container text-center pt-1 pb-1">
-                                                <h6 class="title mb-0">Language Skill</h6>
-                                            </div>
-                                        </a><!--end nav link-->
-                                    </li><!--end nav item-->
-
-                                    <li class="nav-item mt-4 pt-2">
-                                        <a class="nav-link rounded" id="pills-apps-tab" data-toggle="pill" href="#pills-apps" role="tab" aria-controls="pills-apps" aria-selected="false">
-                                            <div class="skill-container text-center pt-1 pb-1">
-                                                <h6 class="title mb-0">Web development</h6>
-                                            </div>
-                                        </a><!--end nav link-->
-                                    </li><!--end nav item-->
+                                    @endforeach
                                 </ul><!--end nav pills-->
                             </div><!--end col-->
 
                             <div class="col-lg-9 col-md-8 col-12">
                                 <div class="tab-content pl-lg-4" id="pills-tabContent">
-                                    <div class="tab-pane fade show active" id="pills-cloud" role="tabpanel" aria-labelledby="pills-cloud-tab">
+                                    @foreach ($user->expertise->expertisesField as $index=>$field)
+                                    <div class="tab-pane fade {{$index == 0 ? 'show active':''}}" id="pills-id{{$field->id}}" role="tabpanel" aria-labelledby="pills-id{{$field->id}}-tab">
+                                        @foreach ($field->skills as $skill)
                                         <div class="progress-box mt-4 pt-2">
-                                            <h6 class="font-weight-normal">HTML</h6>
+                                            <h6 class="font-weight-normal">{{$skill['skill_'.$lang]}}</h6>
                                             <div class="progress">
-                                                <div class="progress-bar position-relative bg-primary" style="width:84%;">
-                                                    <div class="progress-value d-block text-dark h6">84%</div>
+                                                <div class="progress-bar position-relative bg-primary" style="width:{{ $skill->lvl }}%;">
+                                                    <div class="progress-value d-block text-dark h6">{{ $skill->lvl }}%</div>
                                                 </div>
                                             </div>
                                         </div><!--end process box-->
-                                        <div class="progress-box mt-4 pt-2">
-                                            <h6 class="font-weight-normal">CSS</h6>
-                                            <div class="progress">
-                                                <div class="progress-bar position-relative bg-primary" style="width:75%;">
-                                                    <div class="progress-value d-block text-dark h6">75%</div>
-                                                </div>
-                                            </div>
-                                        </div><!--end process box-->
-                                        <div class="progress-box mt-4 pt-2">
-                                            <h6 class="font-weight-normal">JQuery</h6>
-                                            <div class="progress">
-                                                <div class="progress-bar position-relative bg-primary" style="width:79%;">
-                                                    <div class="progress-value d-block text-dark h6">79%</div>
-                                                </div>
-                                            </div>
-                                        </div><!--end process box-->
+                                        @endforeach
                                     </div><!--end teb pane-->
-
-                                    <div class="tab-pane fade" id="pills-smart" role="tabpanel" aria-labelledby="pills-smart-tab">
-                                        <div class="progress-box mt-4 pt-2">
-                                            <h6 class="font-weight-normal">English</h6>
-                                            <div class="progress">
-                                                <div class="progress-bar position-relative bg-primary" style="width:84%;">
-                                                    <div class="progress-value d-block text-dark h6">84%</div>
-                                                </div>
-                                            </div>
-                                        </div><!--end process box-->
-                                        <div class="progress-box mt-4 pt-2">
-                                            <h6 class="font-weight-normal">Spanish</h6>
-                                            <div class="progress">
-                                                <div class="progress-bar position-relative bg-primary" style="width:75%;">
-                                                    <div class="progress-value d-block text-dark h6">75%</div>
-                                                </div>
-                                            </div>
-                                        </div><!--end process box-->
-                                        <div class="progress-box mt-4 pt-2">
-                                            <h6 class="font-weight-normal">German</h6>
-                                            <div class="progress">
-                                                <div class="progress-bar position-relative bg-primary" style="width:79%;">
-                                                    <div class="progress-value d-block text-dark h6">79%</div>
-                                                </div>
-                                            </div>
-                                        </div><!--end process box-->
-                                    </div><!--end teb pane-->
-
-                                    <div class="tab-pane fade" id="pills-apps" role="tabpanel" aria-labelledby="pills-apps-tab">
-                                        <div class="progress-box mt-4 pt-2">
-                                            <h6 class="font-weight-normal">Photoshop</h6>
-                                            <div class="progress">
-                                                <div class="progress-bar position-relative bg-primary" style="width:84%;">
-                                                    <div class="progress-value d-block text-dark h6">84%</div>
-                                                </div>
-                                            </div>
-                                        </div><!--end process box-->
-                                        <div class="progress-box mt-4 pt-2">
-                                            <h6 class="font-weight-normal">Sketch</h6>
-                                            <div class="progress">
-                                                <div class="progress-bar position-relative bg-primary" style="width:75%;">
-                                                    <div class="progress-value d-block text-dark h6">75%</div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div><!--end teb pane-->
+                                    @endforeach
                                 </div><!--end tab content-->
                             </div><!--end col-->
                         </div> <!-- end row -->

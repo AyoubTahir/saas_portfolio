@@ -84,4 +84,8 @@ class User extends Authenticatable implements SaveableInterface
     {
         return $this->hasOne(Resume::class, 'user_id', 'id');
     }
+    public function expertise()
+    {
+        return $this->hasOne(Expertise::class, 'user_id', 'id');
+    }
 }
