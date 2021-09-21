@@ -41,8 +41,21 @@ class Project extends Model implements SaveableInterface
         return $this->belongsTo(Category::class, 'category_id', 'id');
     }
 
-    public function projects()
+    public function images()
     {
         return $this->hasMany(ProjectImage::class, 'project_id', 'id');
+    }
+
+    public function next($name)
+    {
+        $user_id = User::where('name', str_replace('-', ' ', $name))->first()->id;
+
+        return $this->where('id', '>', $this->id)->where('user_id', $user_id)->orderBy('id', 'asc')->first();
+    }
+    public  function previous($name)
+    {
+        $user_id = User::where('name', str_replace('-', ' ', $name))->first()->id;
+
+        return $this->where('id', '<', $this->id)->where('user_id', $user_id)->orderBy('id', 'desc')->first();
     }
 }

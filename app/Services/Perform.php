@@ -7,7 +7,7 @@ use Illuminate\Support\Facades\Auth;
 
 class Perform
 {
-    public static function index($Modal, $relation = null)
+    public static function index($Modal, $relation = null, $all = false)
     {
         $data = $Modal::where('user_id', Auth::id());
 
@@ -15,7 +15,11 @@ class Perform
             $data->with($relation);
         }
 
-        return $data->first();
+        if (!$all) {
+            return $data->first();
+        } else {
+            return $data->get();
+        }
     }
 
     public static function update($Modal, $request)
@@ -56,6 +60,7 @@ class Perform
         $data = $request->only(array_keys((new $Model())->saveableFields()));
 
         if ($id) {
+
             $row = $Model::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
 
             if ($row) {
@@ -68,8 +73,14 @@ class Perform
         return $obj;
     }
 
-    public static function findFirstOrFail($Model, $id)
+    public static function findFirstOrFail($Model, $id, $relation = null)
     {
-        return $Model::where('id', $id)->where('user_id', Auth::id())->firstOrFail();
+        $row =  $Model::where('id', $id)->where('user_id', Auth::id());
+
+        if ($relation) {
+            $row = $row->with($relation);
+        }
+
+        return $row->firstOrFail();
     }
 }

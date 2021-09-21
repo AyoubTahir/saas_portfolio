@@ -88,4 +88,20 @@ class User extends Authenticatable implements SaveableInterface
     {
         return $this->hasOne(Expertise::class, 'user_id', 'id');
     }
+    public function portfolio()
+    {
+        return $this->hasOne(portfolio::class, 'user_id', 'id');
+    }
+    public function categories()
+    {
+        return $this->hasMany(Category::class, 'user_id', 'id');
+    }
+    public function projects()
+    {
+        return $this->hasMany(Project::class, 'user_id', 'id');
+    }
+    public function settings()
+    {
+        return $this->hasOne(Setting::class, 'user_id', 'id');
+    }
 }

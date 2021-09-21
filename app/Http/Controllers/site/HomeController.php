@@ -19,7 +19,9 @@ class HomeController extends Controller
                 'fact.factsField',
                 'service.servicesField',
                 'resume.resumesField',
-                'expertise.expertisesField.skills'
+                'portfolio',
+                'categories.projects.images',
+                'settings',
             )->firstOrFail();
 
         $currentLang = Session::get('currentLang');

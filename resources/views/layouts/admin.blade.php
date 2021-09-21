@@ -23,6 +23,10 @@
             color: #8c8b8b;
             border-radius: 0;
         }
+        .table > tbody > tr > td .usr-img-frame img {
+            height: 100% !important;
+            width: 100% !important;
+        }
     </style>
 
 </head>

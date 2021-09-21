@@ -35,6 +35,7 @@ class FileField extends Field
 
         //store file with new hashed name
         if (!$this->uploadAsOriginalName) {
+
             return $this->value->store($this->directory, $this->disk ?? config('filesystems.default'));
         }
 

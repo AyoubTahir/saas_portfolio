@@ -16,9 +16,9 @@
 <link rel="stylesheet" href="{{ asset('assets/css/owl.theme.css')}}"/>
 <link rel="stylesheet" href="{{ asset('assets/css/owl.transitions.css')}}"/>
 <!-- Custom Css -->
-<?php $direction = session()->get('currentLang') == 'en' ? '' : '-rtl';?>
-
-<link href="{{ asset('assets/css/style'. $direction .'.css')}}" rel="stylesheet" type="text/css" id="theme-opt" />
+<?php $direction = session()->get('currentLang') == 'en' ? '' : '-rtl'; ?>
+<?php $mode = $user->settings->theme_mode == 0 ? '-dark' : ''; ?>
+<link href="{{ asset('assets/css/style'. $mode . $direction .'.css')}}" rel="stylesheet" type="text/css" id="theme-opt" />
 <link href="{{ asset('assets/css/colors/default.css')}}" rel="stylesheet" id="color-opt">
 
 @endsection
@@ -116,7 +116,7 @@
                                         <div class="counter-icon">
                                             <i data-feather="{{ $field->icon }}" class="fea icon-md text-primary"></i>
                                         </div>
-                                        <h3 class="counter-value mt-3 text-white title-dark" data-count="1251">{{ $field->number }}</h3>
+                                        <h3 class="counter-value mt-3 text-white title-dark" data-count="{{ $field->number }}">{{ $field->number }}</h3>
                                         <h6 class="counter-head font-weight-normal mb-0 text-white title-dark">{{ $field['title_'.$lang] }}</h6>
                                     </div><!--end counter box-->
                                 </div><!--end col-->
@@ -289,17 +289,17 @@
     </section><!--end section-->
     <!-- Skill & CTA End -->
 
-    <!-- Projects End -->
+    <!-- Projects Start -->
     <section class="section bg-light" id="projects">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
                     <div class="section-title">
                         <div class="titles">
-                            <h4 class="title title-line text-uppercase mb-4 pb-4">My Portfolio</h4>
+                            <h4 class="title title-line text-uppercase mb-4 pb-4">{{ $user->portfolio['title_'.$lang] }}</h4>
                             <span></span>
                         </div>
-                        <p class="text-muted mx-auto para-desc mb-0">Obviously I'm a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.</p>
+                        <p class="text-muted mx-auto para-desc mb-0">{{ $user->portfolio['desc_'.$lang] }}</p>
                     </div>
                 </div><!--end col-->
             </div><!--end row-->
@@ -309,123 +309,49 @@
             <div class="row mt-4 pt-2">
                 <div class="col-lg-12">
                     <ul class="portfolioFilter text-center mb-0 list-unstyled">
-                        <li class="list-inline-item mb-3"><a href="#" data-filter="*" class="active text-dark mr-2 py-2 px-3 rounded">All</a></li>
-                        <li class="list-inline-item mb-3"><a href="#" data-filter=".natural" class="text-dark mr-2 py-2 px-3 rounded">Natural</a></li>
-                        <li class="list-inline-item mb-3"><a href="#" data-filter=".creative" class="text-dark mr-2 py-2 px-3 rounded">Creative</a></li>
-                        <li class="list-inline-item mb-3"><a href="#" data-filter=".personal" class="text-dark mr-2 py-2 px-3 rounded">Personal</a></li>
-                        <li class="list-inline-item mb-3"><a href="#" data-filter=".photography" class="text-dark mr-2 py-2 px-3 rounded">Photography</a></li>
+                        <li class="list-inline-item mb-3"><a href="#" data-filter="*" class="active text-dark mr-2 py-2 px-3 rounded">{{ __('site.all') }}</a></li>
+                        @if ($user->categories)
+                            @foreach ( $user->categories as $category)
+                                <li class="list-inline-item mb-3"><a href="#" data-filter=".{{ $category->name_en.$category->id }}" class="text-dark mr-2 py-2 px-3 rounded">{{ $category['name_'.$lang] }}</a></li>
+                            @endforeach
+                        @endif
                     </ul>
                 </div><!--end col-->
             </div><!--end row-->
 
             <div class="portfolioContainer row">
-                <div class="col-lg-4 col-md-6 mt-4 pt-2 natural personal">
-                    <div class="portfolio-box rounded shadow position-relative overflow-hidden">
-                        <div class="portfolio-box-img position-relative overflow-hidden">
-                            <img src="{{ asset('assets/images/portfolio/1.jpg') }}" class="img-fluid" alt="member-image">
-                            <div class="overlay-work">
-                                <div class="work-content text-center">
-                                    <a href="{{ asset('assets/images/portfolio/1.jpg') }}" class="text-light work-icon bg-dark d-inline-block rounded-pill mfp-image"><i data-feather="camera" class="fea icon-sm image-icon"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gallary-title py-4 text-center">
-                            <h5><a href="page-portfolio-detail.html" class="title text-dark">The Usefulness</a></h5>
-                            <span>Photography</span>
-                        </div>
-                    </div>
-                </div><!--end col-->
-
-                <div class="col-lg-4 col-md-6 mt-4 pt-2 creative personal photography">
-                    <div class="portfolio-box rounded shadow position-relative overflow-hidden">
-                        <div class="portfolio-box-img position-relative overflow-hidden">
-                            <img src="{{ asset('assets/images/portfolio/2.jpg') }}" class="img-fluid" alt="member-image">
-                            <div class="overlay-work">
-                                <div class="work-content text-center">
-                                    <a href="http://vimeo.com/287684225" class="play-btn video-play-icon text-light work-icon bg-dark d-inline-block rounded-pill"><i data-feather="video" class="fea icon-sm image-icon"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gallary-title py-4 text-center">
-                            <h5><a href="page-portfolio-detail.html" class="title text-dark">The Nonsensical content</a></h5>
-                            <span>Illustrations</span>
-                        </div>
-                    </div>
-                </div><!--end col-->
-
-                <div class="col-lg-4 col-md-6 mt-4 pt-2 natural creative">
-                    <div class="portfolio-box rounded shadow position-relative overflow-hidden">
-                        <div class="portfolio-box-img position-relative overflow-hidden">
-                            <img src="{{ asset('assets/images/portfolio/4.jpg') }}" class="img-fluid" alt="member-image">
-                            <div class="overlay-work">
-                                <div class="work-content text-center">
-                                    <a href="{{ asset('assets/images/portfolio/4.jpg') }}" class="text-light work-icon bg-dark d-inline-block rounded-pill mfp-image"><i data-feather="camera" class="fea icon-sm image-icon"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gallary-title py-4 text-center">
-                            <h5><a href="page-portfolio-detail.html" class="title text-dark">Prevents Patterns</a></h5>
-                            <span>Corrporate</span>
-                        </div>
-                    </div>
-                </div><!--end col-->
-
-                <div class="col-lg-4 col-md-6 mt-4 pt-2  personal photography">
-                    <div class="portfolio-box rounded shadow position-relative overflow-hidden">
-                        <div class="portfolio-box-img position-relative overflow-hidden">
-                            <img src="{{ asset('assets/images/portfolio/6.jpg') }}" class="img-fluid" alt="member-image">
-                            <div class="overlay-work">
-                                <div class="work-content text-center">
-                                    <a href="{{ asset('assets/images/portfolio/6.jpg') }}" class="text-light work-icon bg-dark d-inline-block rounded-pill mfp-image"><i data-feather="camera" class="fea icon-sm image-icon"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gallary-title py-4 text-center">
-                            <h5><a href="page-portfolio-detail.html" class="title text-dark">The Advantageous</a></h5>
-                            <span>Graphics</span>
-                        </div>
-                    </div>
-                </div><!--end col-->
-
-                <div class="col-lg-4 col-md-6 mt-4 pt-2 creative photography">
-                    <div class="portfolio-box rounded shadow position-relative overflow-hidden">
-                        <div class="portfolio-box-img position-relative overflow-hidden">
-                            <img src="{{ asset('assets/images/portfolio/3.jpg') }}" class="img-fluid" alt="member-image">
-                            <div class="overlay-work">
-                                <div class="work-content text-center">
-                                    <a href="http://vimeo.com/287684225" class="play-btn video-play-icon text-light work-icon bg-dark d-inline-block rounded-pill"><i data-feather="video" class="fea icon-sm image-icon"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gallary-title py-4 text-center">
-                            <h5><a href="page-portfolio-detail.html" class="title text-dark">Automatic Recognition</a></h5>
-                            <span>Web Design</span>
-                        </div>
-                    </div>
-                </div><!--end col-->
-
-                <div class="col-lg-4 col-md-6 mt-4 pt-2 natural creative">
-                    <div class="portfolio-box rounded shadow position-relative overflow-hidden">
-                        <div class="portfolio-box-img position-relative overflow-hidden">
-                            <img src="{{ asset('assets/images/portfolio/5.jpg') }}" class="img-fluid" alt="member-image">
-                            <div class="overlay-work">
-                                <div class="work-content text-center">
-                                    <a href="{{ asset('assets/images/portfolio/5.jpg') }}" class="text-light work-icon bg-dark d-inline-block rounded-pill mfp-image"><i data-feather="camera" class="fea icon-sm image-icon"></i></a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="gallary-title py-4 text-center">
-                            <h5><a href="page-portfolio-detail.html" class="title text-dark"> Ius Dissentiunt </a></h5>
-                            <span>Devlopment</span>
-                        </div>
-                    </div>
-                </div><!--end col-->
+                @if ($user->categories)
+                    @foreach ( $user->categories as $category)
+                        @if($category->projects)
+                            @foreach ( $category->projects as $index=>$project)
+                                @if ( $index < 6 )
+                                <div class="col-lg-4 col-md-6 mt-4 pt-2 {{ $category->name_en.$category->id }}">
+                                    <div class="portfolio-box rounded shadow position-relative overflow-hidden">
+                                        <div class="portfolio-box-img position-relative overflow-hidden">
+                                            <img src="{{ $project->thumbnail ? asset('uploads/'.$project->thumbnail) : asset('assets/images/portfolio/1.jpg') }}" class="img-fluid" alt="member-image">
+                                            <div class="overlay-work">
+                                                <div class="work-content text-center">
+                                                    <a href="{{ $project->thumbnail ? asset('uploads/'.$project->thumbnail) : asset('assets/images/portfolio/1.jpg') }}" class="text-light work-icon bg-dark d-inline-block rounded-pill mfp-image"><i data-feather="camera" class="fea icon-sm image-icon"></i></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="gallary-title py-4 text-center">
+                                            <h5><a href="{{url()->current().'/project'.'/'.$project->id}}" class="title text-dark">{{ $project['title_'.$lang] }}</a></h5>
+                                            <span>{{ $category['name_'.$lang]}}</span>
+                                        </div>
+                                    </div>
+                                </div><!--end col-->
+                                @endif
+                            @endforeach
+                        @endif
+                    @endforeach
+                @endif
             </div><!-- End row -->
 
             <div class="row">
                 <div class="col-lg-12 mt-4 pt-2">
                     <div class="text-center">
-                        <a href="page-portfolio.html" class="btn btn-outline-primary">More works <i data-feather="refresh-cw" class="fea icon-sm"></i></a>
+                        <a href="page-portfolio.html" class="btn btn-outline-primary">{{__('site.more')}} <i data-feather="refresh-cw" class="fea icon-sm"></i></a>
                     </div>
                 </div><!--end col-->
             </div><!--end row-->
@@ -626,93 +552,6 @@
         </div><!--end container fluid-->
     </section><!--end section-->
     <!-- Testimonial End -->
-
-    <!-- Blog Start -->
-    <section class="section bg-light pb-3" id="news">
-        <div class="container">
-            <div class="row justify-content-center">
-                <div class="col-12 text-center">
-                    <div class="section-title">
-                        <div class="titles">
-                            <h4 class="title title-line text-uppercase mb-4 pb-4">Latest News & Blog</h4>
-                            <span></span>
-                        </div>
-                        <p class="text-muted mx-auto para-desc mb-0">Obviously I'm a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.</p>
-                    </div>
-                </div><!--end col-->
-            </div><!--end row-->
-
-            <div class="row">
-                <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
-                    <div class="blog-post rounded shadow">
-                        <img src="{{ asset('assets/images/blog/01.jpg') }}" class="img-fluid rounded-top" alt="">
-                        <div class="content pt-4 pb-4 p-3">
-                            <ul class="list-unstyled d-flex justify-content-between post-meta">
-                                        <li><i data-feather="user" class="fea icon-sm mr-1"></i><a href="javascript:void(0)" class="text-dark">Cristino</a></li>
-                                        <li><i data-feather="tag" class="fea icon-sm mr-1"></i><a href="javascript:void(0)" class="text-dark">Branding</a></li>
-                                    </ul>
-                            <h5 class="mb-3"><a href="page-blog-detail.html" class="title text-dark">Our Home Entertainment has Evolved Significantly</a></h5>
-                            <ul class="list-unstyled mb-0 pt-3 border-top d-flex justify-content-between">
-                                <li><a href="javascript:void(0)" class="text-dark">Read More <i data-feather="chevron-right" class="fea icon-sm"></i></a></li>
-                                <li><i class="mdi mdi-calendar-edit mr-1"></i>10th April, 2020</li>
-                            </ul>
-                        </div><!--end content-->
-                    </div><!--end blog post-->
-                </div><!--end col-->
-
-                <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
-                    <div class="blog-post rounded shadow">
-                        <img src="{{ asset('assets/images/blog/02.jpg') }}" class="img-fluid rounded-top" alt="">
-                        <div class="content pt-4 pb-4 p-3">
-                            <ul class="list-unstyled d-flex justify-content-between post-meta">
-                                        <li><i data-feather="user" class="fea icon-sm mr-1"></i><a href="javascript:void(0)" class="text-dark">Cristino</a></li>
-                                        <li><i data-feather="tag" class="fea icon-sm mr-1"></i><a href="javascript:void(0)" class="text-dark">Branding</a></li>
-                                    </ul>
-                            <h5 class="mb-3"><a href="page-blog-detail.html" class="title text-dark">These Are The Voyages of The Starship Enterprise</a></h5>
-                            <ul class="list-unstyled mb-0 pt-3 border-top d-flex justify-content-between">
-                                <li><a href="javascript:void(0)" class="text-dark">Read More <i data-feather="chevron-right" class="fea icon-sm"></i></a></li>
-                                <li><i class="mdi mdi-calendar-edit mr-1"></i>10th April, 2020</li>
-                            </ul>
-                        </div><!--end content-->
-                    </div><!--end blog post-->
-                </div><!--end col-->
-
-                <div class="col-lg-4 col-md-6 col-12 mt-4 pt-2">
-                    <div class="blog-post rounded shadow">
-                        <img src="{{ asset('assets/images/blog/03.jpg') }}" class="img-fluid rounded-top" alt="">
-                        <div class="content pt-4 pb-4 p-3">
-                            <ul class="list-unstyled d-flex justify-content-between post-meta">
-                                        <li><i data-feather="user" class="fea icon-sm mr-1"></i><a href="javascript:void(0)" class="text-dark">Cristino</a></li>
-                                        <li><i data-feather="tag" class="fea icon-sm mr-1"></i><a href="javascript:void(0)" class="text-dark">Branding</a></li>
-                                    </ul>
-                            <h5 class="mb-3"><a href="page-blog-detail.html" class="title text-dark">Three Reasons Visibility Matters in Supply Chain</a></h5>
-                            <ul class="list-unstyled mb-0 pt-3 border-top d-flex justify-content-between">
-                                <li><a href="javascript:void(0)" class="text-dark">Read More <i data-feather="chevron-right" class="fea icon-sm"></i></a></li>
-                                <li><i class="mdi mdi-calendar-edit mr-1"></i>10th April, 2020</li>
-                            </ul>
-                        </div><!--end content-->
-                    </div><!--end blog post-->
-                </div><!--end col-->
-            </div><!--end row-->
-        </div><!--end container-->
-
-        <div class="container-fluid mt-100 mt-60">
-            <div class="rounded-pill py-5" style="background: url('{{ asset('assets/images/hireme.jpg') }}') center center;">
-                <div class="container">
-                    <div class="row justify-content-center">
-                        <div class="col-12 text-center">
-                            <h4 class="text-light title-dark">I Am Available For Freelancer Projects.</h4>
-                            <p class="text-white-50 mx-auto mt-4 para-desc">Obviously I'm a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.</p>
-                            <div class="mt-4">
-                                <a href="#contact" class="btn btn-primary mouse-down">Hire me <i data-feather="chevron-down" class="fea icon-sm"></i></a>
-                            </div>
-                        </div><!--end col-->
-                    </div><!--end row-->
-                </div><!--end container-->
-            </div><!--end div-->
-        </div><!--end container fluid-->
-    </section><!--end section-->
-    <!-- Blog Start -->
 
     <!-- Contact Start -->
     <section class="section pb-0" id="contact">

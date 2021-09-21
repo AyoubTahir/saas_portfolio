@@ -4,8 +4,11 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\site\HomeController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\site\LanguageController;
+use App\Http\Controllers\site\ProjectsController;
 use App\Http\Controllers\Admin\CategoryController;
+use App\Http\Controllers\Admin\SettingsController;
 use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\HeroSectionController;
 use App\Http\Controllers\Admin\AboutSectionController;
@@ -13,12 +16,13 @@ use App\Http\Controllers\Admin\FactsSectionController;
 use App\Http\Controllers\Admin\ResumesSectionController;
 use App\Http\Controllers\Admin\InterestSectionController;
 use App\Http\Controllers\Admin\ServicesSectionController;
+use App\Http\Controllers\Admin\PortfolioSectionController;
 use App\Http\Controllers\Admin\ExpertisesSectionController;
 
 //site
 Route::get('/lang', [LanguageController::class, 'switchLang']);
-Route::get('/{username}', [HomeController::class, 'index']);
-
+Route::get('/{username}', [HomeController::class, 'index'])->name('site.home');;
+Route::get('/{username}/project/{id}', [ProjectsController::class, 'show'])->name('site.poroject');
 //admin
 Route::prefix('t-admin')->group(function () {
 
@@ -79,6 +83,9 @@ Route::prefix('t-admin')->group(function () {
     Route::post('/expertises/skills/delete/{id}', [ExpertisesSectionController::class, 'deleteSkillExpertises'])->name('home.skills.delete');
     Route::post('/expertises/skills/destroy', [ExpertisesSectionController::class, 'destroySkillExpertises'])->name('home.skills.destroy');
 
+    Route::get('/portfolio', [PortfolioSectionController::class, 'portfolioSection'])->name('portfolio.index');
+    Route::post('/portfolio/update', [PortfolioSectionController::class, 'updatePortfolioSection'])->name('portfolio.updatesection');
+
     //categories
     Route::get('/portfolio/categories', [CategoryController::class, 'index'])->name('portfolio.categories.index');
     Route::post('/portfolio/categories/store', [CategoryController::class, 'store'])->name('portfolio.categories.store');
@@ -95,6 +102,13 @@ Route::prefix('t-admin')->group(function () {
     Route::post('/portfolio/projects/update/{id}', [ProjectController::class, 'update'])->name('portfolio.projects.update');
     Route::post('/portfolio/projects/delete/{id}', [ProjectController::class, 'delete'])->name('portfolio.projects.delete');
     Route::post('/portfolio/projects/destroy', [ProjectController::class, 'destroy'])->name('portfolio.projects.destroy');
+
+    Route::post('/portfolio/projects/images/store/{id}', [ProjectController::class, 'storeImages'])->name('portfolio.projects.images.store');
+    Route::post('/portfolio/projects/{pid}/images/delete/{id}', [ProjectController::class, 'deleteImages'])->name('portfolio.projects.images.delete');
+    Route::post('/portfolio/projects/{pid}/images/destroy', [ProjectController::class, 'destroyImages'])->name('portfolio.projects.images.destroy');
+
+    Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
+    Route::post('/settings/update', [SettingsController::class, 'update'])->name('settings.update');
 
     //users
     Route::get('/users', [UsersController::class, 'index'])->name('users');

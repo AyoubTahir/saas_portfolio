@@ -76,7 +76,13 @@
                 </a>
                 <ul class="collapse submenu list-unstyled" id="portfolio" data-parent="#accordionExample">
                     <li>
+                        <a href="{{route('portfolio.index')}}"> Information </a>
+                    </li>
+                    <li>
                         <a href="{{route('portfolio.categories.index')}}"> Categories </a>
+                    </li>
+                    <li>
+                        <a href="{{route('portfolio.projects.index')}}"> Projects </a>
                     </li>
                 </ul>
             </li>
@@ -102,6 +108,14 @@
                 </a>
             </li>
 
+            <li class="menu">
+                <a href="{{route('settings.index')}}" aria-expanded="false" class="dropdown-toggle {{ (request()->is('t-admin/settings')) ? 'active-menu' : '' }}">
+                    <div class="">
+                        <i class="flaticon-users {{ (request()->is('t-admin/settings')) ? 'active-menu' : '' }}"></i>
+                        <span>Settings</span>
+                    </div>
+                </a>
+            </li>
         </ul>
     </nav>
 
