@@ -21,6 +21,7 @@ class HomeController extends Controller
                 'resume.resumesField',
                 'portfolio',
                 'categories.projects.images',
+                'contact',
                 'settings',
             )->firstOrFail();
 

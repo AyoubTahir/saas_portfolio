@@ -42,8 +42,8 @@
                     <div class="page-next-level">
                         <h1 class="title" style="color: #ffc107 !important;text-transform: uppercase;letter-spacing: .4rem;"> {{ $project['title_'.$lang] }} </h1>
                         <ul class="page-next bg-light d-inline-block py-2 px-4 mt-3 rounded mb-0">
-                            <li><a href="index.html" class="text-dark">{{$user->settings['website_name_'.$lang]}}</a></li>
-                            <li><a href="page-portfolio.html" class="text-dark">{{ __('site.projects') }}</a></li>
+                            <li><a href="{{ route('site.home',str_replace(' ', '-', $user->name)) }}" class="text-dark">{{$user->settings['website_name_'.$lang]}}</a></li>
+                            <li><a href="{{ route('site.porojects',str_replace(' ', '-', $user->name))}}" class="text-dark">{{ __('site.projects') }}</a></li>
                             <li>
                                 <span class="text-primary"> {{ __('site.projects_detail') }}</span>
                             </li>
@@ -122,9 +122,9 @@
             <div class="row mt-4 pt-2">
                 <div class="col-12">
                     <ul class="pagination justify-content-center mb-0 list-unstyled">
-                        <li><a href="{{ $project->previous($user->name) ? route('site.poroject', [str_replace(' ', '-', $user->name), $project->previous($user->name)->id]) : '#' }}" class="pr-3 pl-3 pt-2 pb-2"> <i class="mdi mdi-chevron-left"></i> {{ __('site.previous') }}</a></li>
+                        <li><a href="{{ $project->previous($user->name) ? route('site.porojects.show', [str_replace(' ', '-', $user->name), $project->previous($user->name)->id]) : '#' }}" class="pr-3 pl-3 pt-2 pb-2"> <i class="mdi mdi-chevron-left"></i> {{ __('site.previous') }}</a></li>
                         <li><a href="{{ route('site.home',str_replace(' ', '-', $user->name)) }}" class="pr-3 pl-3 pt-2 pb-2"><i class="mdi mdi-home"></i> {{ __('site.home') }}</a></li>
-                        <li><a href="{{ $project->next($user->name) ? route('site.poroject', [str_replace(' ', '-', $user->name), $project->next($user->name)->id]) : '#' }}" class="pr-3 pl-3 pt-2 pb-2">{{ __('site.next') }} <i class="mdi mdi-chevron-right"></i></a></li>
+                        <li><a href="{{ $project->next($user->name) ? route('site.porojects.show', [str_replace(' ', '-', $user->name), $project->next($user->name)->id]) : '#' }}" class="pr-3 pl-3 pt-2 pb-2">{{ __('site.next') }} <i class="mdi mdi-chevron-right"></i></a></li>
                     </ul><!--end pagination-->
                 </div><!--end col-->
             </div>

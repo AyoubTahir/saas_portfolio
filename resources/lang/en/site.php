@@ -23,7 +23,20 @@ return [
 
     'projects'  => 'Projects',
     'projects_detail'  => 'Projects Detail',
+    'projects_and_works'  => 'Projects & Works',
 
     'next'  => 'Next',
     'previous'  => 'previous',
+
+    //contact
+    'phone'  => 'PHONE',
+    'email'  => 'EMAIL',
+    'address'  => 'ADDRESS',
+    'view_on_map'  => 'View on Google map',
+
+    'full_name'  => 'Full Name',
+    'your_email'  => 'Your Email',
+    'your_subject'  => 'Your Subject',
+    'your_message'  => 'Your Message',
+    'send_message'  => 'Send Message',
 ];

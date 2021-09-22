@@ -351,7 +351,7 @@
             <div class="row">
                 <div class="col-lg-12 mt-4 pt-2">
                     <div class="text-center">
-                        <a href="page-portfolio.html" class="btn btn-outline-primary">{{__('site.more')}} <i data-feather="refresh-cw" class="fea icon-sm"></i></a>
+                        <a href="{{ route('site.porojects',str_replace(' ', '-', $user->name))}}" class="btn btn-outline-primary">{{__('site.more')}} <i data-feather="refresh-cw" class="fea icon-sm"></i></a>
                     </div>
                 </div><!--end col-->
             </div><!--end row-->
@@ -560,53 +560,61 @@
                 <div class="col-12 text-center">
                     <div class="section-title">
                         <div class="titles">
-                            <h4 class="title title-line text-uppercase mb-4 pb-4">Contact Me</h4>
+                            <h4 class="title title-line text-uppercase mb-4 pb-4">{{ $user->contact['title_'.$lang] }}</h4>
                             <span></span>
                         </div>
-                        <p class="text-muted mx-auto para-desc mb-0">Obviously I'm a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.</p>
+                        <p class="text-muted mx-auto para-desc mb-0">{{ $user->contact['desc_'.$lang] }}</p>
                     </div>
                 </div><!--end col-->
             </div><!--end row-->
 
             <div class="row">
-                <div class="col-md-4 mt-4 pt-2">
-                    <div class="contact-detail text-center">
-                        <div class="icon">
-                            <i data-feather="phone" class="fea icon-md"></i>
+                @if ($user->contact->phone)
+                    <div class="col-md-4 mt-4 pt-2">
+                        <div class="contact-detail text-center">
+                            <div class="icon">
+                                <i data-feather="phone" class="fea icon-md"></i>
+                            </div>
+                            <div class="content mt-4">
+                                <h5 class="title text-uppercase">{{ __('site.phone') }}</h5>
+                                <p class="text-muted">{{ $user->contact['phone_desc_'.$lang] ? $user->contact['phone_desc_'.$lang] : '' }}</p>
+                                <a href="tel:{{ $user->contact->phone }}" class="text-primary">{{ $user->contact->phone }}</a>
+                            </div>
                         </div>
-                        <div class="content mt-4">
-                            <h5 class="title text-uppercase">Phone</h5>
-                            <p class="text-muted">Promising development turmoil inclusive education transformative community</p>
-                            <a href="tel:+152534-468-854" class="text-primary">+152 534-468-854</a>
-                        </div>
-                    </div>
-                </div><!--end col-->
+                    </div><!--end col-->
+                @endif
 
-                <div class="col-md-4 mt-4 pt-2">
-                    <div class="contact-detail text-center">
-                        <div class="icon">
-                            <i data-feather="mail" class="fea icon-md"></i>
+                @if ($user->contact->email)
+                    <div class="col-md-4 mt-4 pt-2">
+                        <div class="contact-detail text-center">
+                            <div class="icon">
+                                <i data-feather="mail" class="fea icon-md"></i>
+                            </div>
+                            <div class="content mt-4">
+                                <h5 class="title text-uppercase">{{ __('site.email') }}</h5>
+                                <p class="text-muted">{{ $user->contact['email_desc_'.$lang] ? $user->contact['email_desc_'.$lang] : '' }}</p>
+                                <a href="mailto:{{ $user->contact->email }}" class="text-primary">{{ $user->contact->email }}</a>
+                            </div>
                         </div>
-                        <div class="content mt-4">
-                            <h5 class="title text-uppercase">Email</h5>
-                            <p class="text-muted">Promising development turmoil inclusive education transformative community</p>
-                            <a href="mailto:contact@example.com" class="text-primary">contact@example.com</a>
-                        </div>
-                    </div>
-                </div><!--end col-->
+                    </div><!--end col-->
+                @endif
 
-                <div class="col-md-4 mt-4 pt-2">
-                    <div class="contact-detail text-center">
-                        <div class="icon">
-                            <i data-feather="map-pin" class="fea icon-md"></i>
+                @if ($user->contact['address_'.$lang])
+                    <div class="col-md-4 mt-4 pt-2">
+                        <div class="contact-detail text-center">
+                            <div class="icon">
+                                <i data-feather="map-pin" class="fea icon-md"></i>
+                            </div>
+                            <div class="content mt-4">
+                                <h5 class="title text-uppercase">{{ __('site.address') }}</h5>
+                                <p class="text-muted">{{ $user->contact['address_'.$lang] }}</p>
+                                @if ($user->contact->address_link)
+                                    <a href="{{ $user->contact->address_link }}" class="video-play-icon text-primary">{{ __('site.view_on_map') }}</a>
+                                @endif
+                            </div>
                         </div>
-                        <div class="content mt-4">
-                            <h5 class="title text-uppercase">Location</h5>
-                            <p class="text-muted">C/54 Northwest Freeway, Suite 558, <br>Houston, USA 485</p>
-                            <a href="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d6030.418742494061!2d-111.34563870463673!3d26.01036670629853!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2smx!4v1471908546569" class="video-play-icon text-primary">View on Google map</a>
-                        </div>
-                    </div>
-                </div><!--end col-->
+                    </div><!--end col-->
+                @endif
             </div><!--end row-->
         </div><!--end container-->
     </section><!--end section-->
@@ -616,24 +624,45 @@
             <div class="row justify-content-center">
                 <div class="col-lg-12">
                     <div class="custom-form mb-sm-30">
-                        <div id="message"></div>
-                        <form method="post" action="php/contact.php" name="contact-form" id="contact-form">
+                        <form method="POST" action="{{ route('message.store',$user->id)}}">
+                            @csrf
+                            @if (session('success'))
+                                <div class="alert alert-success" role="alert">
+                                    Your Message Has Been Sent Successfully
+                                </div>
+                            @endif
                             <div class="row">
                                 <div class="col-lg-6">
                                     <div class="row">
                                         <div class="col-lg-12 col-md-6">
                                             <div class="form-group">
-                                                <input name="name" id="name" type="text" class="form-control border rounded" placeholder="First Name :">
+                                                <input name="full_name" id="name" type="text" value="{{ old('full_name') }}" class="form-control border rounded" placeholder="{{ __('site.full_name') }} :">
+                                                <input type="hidden" name="username" value="{{$user->name}}">
+                                                @error('full_name')
+                                                    <span class="invalid-feedback" style="display: inline-block" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div><!--end col-->
                                         <div class="col-lg-12 col-md-6">
                                             <div class="form-group">
-                                                <input name="email" id="email" type="email" class="form-control border rounded" placeholder="Your email :">
+                                                <input name="email" id="email" type="email" value="{{ old('email') }}"  class="form-control border rounded" placeholder="{{ __('site.your_email') }} :">
+                                                @error('email')
+                                                    <span class="invalid-feedback" style="display: inline-block" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div><!--end col-->
                                         <div class="col-lg-12">
                                             <div class="form-group">
-                                                <input name="subject" id="subject" class="form-control border rounded" placeholder="Your subject :">
+                                                <input name="subject" id="subject" type="text" value="{{ old('subject') }}" class="form-control border rounded" placeholder="{{ __('site.your_subject') }} :">
+                                                @error('subject')
+                                                    <span class="invalid-feedback" style="display: inline-block" role="alert">
+                                                        <strong>{{ $message }}</strong>
+                                                    </span>
+                                                @enderror
                                             </div>
                                         </div><!--end col-->
                                     </div><!--end row-->
@@ -641,14 +670,18 @@
 
                                 <div class="col-lg-6">
                                     <div class="form-group">
-                                        <textarea name="comments" id="comments" rows="4" class="form-control border rounded" placeholder="Your Message :"></textarea>
+                                        <textarea name="message" id="comments" rows="4" class="form-control border rounded" placeholder="{{ __('site.your_message') }} :">{{ old('message') }}</textarea>
+                                        @error('message')
+                                            <span class="invalid-feedback" style="display: inline-block" role="alert">
+                                                <strong>{{ $message }}</strong>
+                                            </span>
+                                        @enderror
                                     </div>
                                 </div><!--end col-->
                             </div><!--end row-->
                             <div class="row">
                                 <div class="col-sm-12 text-right">
-                                    <input type="submit" id="submit" name="send" class="submitBnt btn btn-primary" value="Send Message">
-                                    <div id="simple-msg"></div>
+                                    <button type="submit" class="btn btn-primary">{{ __('site.send_message') }}</button>
                                 </div><!--end col-->
                             </div><!--end row-->
                         </form><!--end form-->

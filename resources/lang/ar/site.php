@@ -23,8 +23,21 @@ return [
 
     'projects'  => 'المشاريع',
     'projects_detail'  => 'تفاصيل المشروع',
+    'projects_and_works'  => 'المشاريع والاعمال',
 
     'next'  => 'التالي',
     'previous'  => 'السابق',
+
+    //contact
+    'phone'  => 'الهاتف',
+    'email'  => 'البريد الإلكتروني',
+    'address'  => 'العنوان',
+    'view_on_map'  => 'عرض على خريطة جوجل',
+
+    'full_name'  => 'الاسم الكامل',
+    'your_email'  => 'بريدك الالكتروني',
+    'your_subject'  => 'موضوعك',
+    'your_message'  => 'رسالتك',
+    'send_message'  => ' أرسل الرسالة',
 
 ];

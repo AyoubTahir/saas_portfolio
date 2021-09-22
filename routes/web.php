@@ -4,6 +4,8 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\site\HomeController;
 use App\Http\Controllers\Admin\UsersController;
+use App\Http\Controllers\Admin\ContactController;
+use App\Http\Controllers\Admin\MessageController;
 use App\Http\Controllers\Admin\ProjectController;
 use App\Http\Controllers\site\LanguageController;
 use App\Http\Controllers\site\ProjectsController;
@@ -21,8 +23,10 @@ use App\Http\Controllers\Admin\ExpertisesSectionController;
 
 //site
 Route::get('/lang', [LanguageController::class, 'switchLang']);
-Route::get('/{username}', [HomeController::class, 'index'])->name('site.home');;
-Route::get('/{username}/project/{id}', [ProjectsController::class, 'show'])->name('site.poroject');
+Route::get('/{username}', [HomeController::class, 'index'])->name('site.home');
+Route::get('/{username}/projects', [ProjectsController::class, 'index'])->name('site.porojects');
+Route::get('/{username}/projects/{id}', [ProjectsController::class, 'show'])->name('site.porojects.show');
+Route::post('/message/store/{user_id}', [MessageController::class, 'store'])->name('message.store');
 //admin
 Route::prefix('t-admin')->group(function () {
 
@@ -107,8 +111,13 @@ Route::prefix('t-admin')->group(function () {
     Route::post('/portfolio/projects/{pid}/images/delete/{id}', [ProjectController::class, 'deleteImages'])->name('portfolio.projects.images.delete');
     Route::post('/portfolio/projects/{pid}/images/destroy', [ProjectController::class, 'destroyImages'])->name('portfolio.projects.images.destroy');
 
+    //settings
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::post('/settings/update', [SettingsController::class, 'update'])->name('settings.update');
+
+    //contact
+    Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
+    Route::post('/contact/update', [ContactController::class, 'update'])->name('contact.update');
 
     //users
     Route::get('/users', [UsersController::class, 'index'])->name('users');

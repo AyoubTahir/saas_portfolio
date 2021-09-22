@@ -97,7 +97,7 @@
             </li>
 
             <li class="menu">
-                <a href="#" aria-expanded="false" class="dropdown-toggle">
+                <a href="#contact" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
                         <i class="flaticon-mail-16"></i>
                         <span>Contact</span>
@@ -105,7 +105,15 @@
                     <div>
                         <span class="badge badge-pill badge-secondary mr-2">7</span>
                     </div>
+                    <div>
+                        <i class="flaticon-right-arrow"></i>
+                    </div>
                 </a>
+                <ul class="collapse submenu list-unstyled" id="contact" data-parent="#accordionExample">
+                    <li>
+                        <a href="{{route('contact.index')}}"> Information </a>
+                    </li>
+                </ul>
             </li>
 
             <li class="menu">

@@ -11,9 +11,13 @@ class Language
     public function handle(Request $request, Closure $next)
     {
         if (Session()->has('currentLang')) {
+
             App::setLocale(Session()->get('currentLang'));
         } else {
+
             App::setLocale(config('app.fallback_locale'));
+
+            Session()->put('currentLang', 'en');
         }
 
         return $next($request);
