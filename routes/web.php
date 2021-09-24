@@ -119,6 +119,11 @@ Route::prefix('t-admin')->group(function () {
     Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');
     Route::post('/contact/update', [ContactController::class, 'update'])->name('contact.update');
 
+    //messages
+    Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+    Route::get('/messages/{id}', [MessageController::class, 'show'])->name('messages.show');
+    Route::post('/messages/destroy', [MessageController::class, 'destroy'])->name('messages.destroy');
+
     //users
     Route::get('/users', [UsersController::class, 'index'])->name('users');
     Route::get('/users/create', [UsersController::class, 'create'])->name('users.create');

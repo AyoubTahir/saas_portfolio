@@ -2,27 +2,8 @@
 
 @section('page_css')
 <!--  BEGIN CUSTOM STYLE FILE  -->
-<link rel="stylesheet" type="text/css" href="{{asset('assets/admin/plugins/dropify/dropify.min.css')}}">
 <link href="{{asset('assets/admin/assets/css/users/account-setting.css')}}" rel="stylesheet" type="text/css" />
 <!--  END CUSTOM STYLE FILE  -->
-<style>
-    .hero-bg .dropify-wrapper{
-        width: auto !important;
-        height: 300px !important;
-        border: 2px solid rgb(185, 185, 185) !important;
-
-    }
-    .hero-bg .dropify-preview{
-        background: gainsboro !important;
-    }
-    label,p{
-        color: rgb(66, 66, 66) !important;
-    }
-    .general-info .info .dropify-wrapper {
-        width: 126px !important;
-        height: 126px !important;
-    }
-</style>
 @endsection
 
 @section('page_header')
@@ -260,10 +241,4 @@
 @endsection
 
 @push('page_scripts')
-<script src="{{asset('assets/admin/plugins/dropify/dropify.min.js')}}"></script>
-<script>
-    $('.dropify').dropify({
-        messages: { 'default': 'Click to Upload or Drag n Drop', 'remove':  '<i class="flaticon-close-fill"></i>', 'replace': 'Upload or Drag n Drop' }
-    });
-</script>
 @endpush

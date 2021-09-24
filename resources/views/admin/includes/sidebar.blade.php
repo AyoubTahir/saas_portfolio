@@ -103,7 +103,7 @@
                         <span>Contact</span>
                     </div>
                     <div>
-                        <span class="badge badge-pill badge-secondary mr-2">7</span>
+                        <span class="badge badge-pill badge-secondary mr-2">{{ MsgCount() ? MsgCount() : '' }}</span>
                     </div>
                     <div>
                         <i class="flaticon-right-arrow"></i>
@@ -112,6 +112,9 @@
                 <ul class="collapse submenu list-unstyled" id="contact" data-parent="#accordionExample">
                     <li>
                         <a href="{{route('contact.index')}}"> Information </a>
+                    </li>
+                    <li>
+                        <a href="{{route('messages.index')}}"> MailBox </a>
                     </li>
                 </ul>
             </li>

@@ -16,11 +16,11 @@
     <ul class="navbar-nav flex-row mr-lg-auto ml-lg-0  ml-auto">
         <li class="nav-item dropdown message-dropdown ml-lg-4">
             <a href="javascript:void(0);" class="nav-link dropdown-toggle" id="messageDropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                <span class="flaticon-mail-10"></span><span class="badge badge-primary">13</span>
+                <span class="flaticon-mail-10"></span><span class="badge badge-primary">{{ MsgCount() ? MsgCount() : '' }}</span>
             </a>
             <div class="dropdown-menu  position-absolute" aria-labelledby="messageDropdown">
                 <a class="dropdown-item title" href="javascript:void(0);">
-                    <i class="flaticon-chat-line mr-3"></i><span>You have 13 new messages</span>
+                    <i class="flaticon-chat-line mr-3"></i><span>You have {{ MsgCount() }} new messages</span>
                 </a>
                 <a class="dropdown-item" href="javascript:void(0);">
                     <div class="media">
@@ -55,16 +55,13 @@
             </a>
             <div class="dropdown-menu  position-absolute" aria-labelledby="userProfileDropdown">
                 <a class="dropdown-item" href="#">
-                    <i class="mr-1 flaticon-user-6"></i> <span>Welcome {{ Auth::user() ? Auth::user()->name : 'admin' }}</span>
+                    <i class="mr-1 flaticon-user-6"></i> <span>{{ Auth::user() ? Auth::user()->name : 'admin' }}</span>
                 </a>
-                <a class="dropdown-item" href="apps_scheduler.html">
-                    <i class="mr-1 flaticon-calendar-bold"></i> <span>My Schedule</span>
+                <a class="dropdown-item" href="{{ route('site.home',str_replace(' ','-', Auth::user()->name)) }}"  target="_blank">
+                    <i class="mr-1 flaticon-log"></i> <span>My Website</span>
                 </a>
                 <a class="dropdown-item" href="apps_mailbox.html">
                     <i class="mr-1 flaticon-email-fill-1"></i> <span>My Inbox</span>
-                </a>
-                <a class="dropdown-item" href="user_lockscreen_1.html">
-                    <i class="mr-1 flaticon-lock-2"></i> <span>Lock Screen</span>
                 </a>
                 <div class="dropdown-divider"></div>
                 <a class="dropdown-item" href="{{ route('logout') }}" onclick="event.preventDefault();document.getElementById('logout-form').submit();">
