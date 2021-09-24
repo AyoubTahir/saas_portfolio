@@ -8,6 +8,7 @@ use App\Services\Perform;
 class Messages
 {
     private static $newMessages;
+    private static $lastMessages;
 
     public static function newMessages()
     {
@@ -16,5 +17,14 @@ class Messages
         }
 
         return self::$newMessages;
+    }
+
+    public static function lastMessages()
+    {
+        if (is_null(self::$lastMessages)) {
+            self::$lastMessages = Perform::index(Message::class, null, true)->where('important', 0)->where('readed', 0)->take(3);
+        }
+
+        return self::$lastMessages;
     }
 }

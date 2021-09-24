@@ -36,8 +36,7 @@
                             <div class="media mb-5">
                               <div class="media-body">
                                 <h5 class="mt-0">{{ Auth::user()->name }}</h5>
-                                <a href="" class="mr-2"><i class="flaticon-user-7"></i> Profile</a>
-                                <a href=""><i class="flaticon-settings-7"></i> Setting</a>
+                                <a href="{{ route('settings.index') }}"><i class="flaticon-settings-7"></i> Setting</a>
                               </div>
                             </div>
                         </div>
@@ -49,15 +48,9 @@
 
                     <ul class="list-unstyled mt-5">
                         <li class="active">
-                            <a href="apps_mailbox.html">
+                            <a href="{{ route('messages.index') }}">
                                 <i class="flaticon-mail-fill"></i>
-                                Inbox <span class="badge badge-primary badge-pill ml-1">6</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="apps_mailbox_draft.html">
-                                <i class="flaticon-email-fill"></i>
-                                Draft <span class="badge badge-warning badge-pill ml-1">2</span>
+                                Inbox @if (MsgCount())<span class="badge badge-primary badge-pill ml-1">{{ MsgCount() }}</span>@endif
                             </a>
                         </li>
                         <li>
@@ -67,15 +60,9 @@
                             </a>
                         </li>
                         <li>
-                            <a href="apps_mailbox_important.html">
+                            <a href="{{ route('messages.important') }}">
                                 <i class="flaticon-mail-14"></i>
-                                Important <span class="badge badge-new badge-pill ml-1">8</span>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="apps_mailbox_trash.html">
-                                <i class="flaticon-delete-fill"></i>
-                                Trash
+                                Important
                             </a>
                         </li>
                     </ul>

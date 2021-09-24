@@ -35,8 +35,7 @@
                             <div class="media mb-5">
                               <div class="media-body">
                                 <h5 class="mt-0">{{ Auth::user()->name }}</h5>
-                                <a href="" class="mr-2"><i class="flaticon-user-7"></i> Profile</a>
-                                <a href=""><i class="flaticon-settings-7"></i> Setting</a>
+                                <a href="{{ route('settings.index') }}"><i class="flaticon-settings-7"></i> Setting</a>
                               </div>
                             </div>
                         </div>
@@ -48,7 +47,7 @@
 
                     <ul class="list-unstyled mt-5">
                         <li class="active">
-                            <a href="apps_mailbox.html">
+                            <a href="{{ route('messages.index') }}">
                                 <i class="flaticon-mail-fill"></i>
                                 Inbox @if (MsgCount())<span class="badge badge-primary badge-pill ml-1">{{ MsgCount() }}</span>@endif
                             </a>
@@ -60,15 +59,9 @@
                             </a>
                         </li>
                         <li>
-                            <a href="apps_mailbox_important.html">
+                            <a href="{{ route('messages.important') }}">
                                 <i class="flaticon-mail-14"></i>
                                 Important
-                            </a>
-                        </li>
-                        <li>
-                            <a href="apps_mailbox_trash.html">
-                                <i class="flaticon-delete-fill"></i>
-                                Trash
                             </a>
                         </li>
                     </ul>
@@ -131,23 +124,7 @@
                 </div>
                 <div class="col-xl-3 ml-auto col-lg-12 col-md-12 col-sm-12 mb-4">
                     <nav class="mail-pagination" aria-label="Page navigation example">
-                        <ul class="pagination">
-                            <li class="page-item non-hover">
-                                <a class="page-link" href="#">1-50 of 9</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link" href="#" aria-label="Previous">
-                                    <span aria-hidden="true">&laquo;</span>
-                                    <span class="sr-only">Previous</span>
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link br-0" href="#" aria-label="Next">
-                                    <span aria-hidden="true">&raquo;</span>
-                                    <span class="sr-only">Next</span>
-                                </a>
-                            </li>
-                        </ul>
+                        {{ $messages->links('admin.paginator') }}
                     </nav>
                 </div>
                 <div class="col-md-12">

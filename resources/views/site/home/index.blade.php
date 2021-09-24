@@ -17,7 +17,7 @@
 <link rel="stylesheet" href="{{ asset('assets/css/owl.transitions.css')}}"/>
 <!-- Custom Css -->
 <?php $direction = session()->get('currentLang') == 'en' ? '' : '-rtl'; ?>
-<?php $mode = $user->settings->theme_mode == 0 ? '-dark' : ''; ?>
+<?php $mode = $user->settings && $user->settings->theme_mode == 0 ? '-dark' : ''; ?>
 <link href="{{ asset('assets/css/style'. $mode . $direction .'.css')}}" rel="stylesheet" type="text/css" id="theme-opt" />
 <link href="{{ asset('assets/css/colors/default.css')}}" rel="stylesheet" id="color-opt">
 
@@ -26,13 +26,13 @@
 @section('content')
 
     <!-- HOME START-->
-    <section class="bg-home d-table w-100" style="background-image:url('{{ asset('uploads/'. $user->hero['cover']) }}')" id="home">
+    <section class="bg-home d-table w-100" style="background-image:url('{{ $user->hero ? asset('uploads/'. $user->hero['cover']) : asset('assets/images/home/02.jpg') }}')" id="home">
         <div class="bg-overlay"></div>
         <div class="container position-relative" style="z-index: 1;">
             <div class="row mt-5 mt-sm-0 justify-content-center">
                 <div class="col-lg-12 text-center">
                     <div class="title-heading">
-                        <img src="{{ asset('uploads/'. $user->hero['image']) }}" class="img-fluid rounded-circle" alt="" style="width: 200px;">
+                        <img src="{{ $user->hero ? asset('uploads/'. $user->hero['image']) : asset('assets/images/home/hero.jpg') }}" class="img-fluid rounded-circle" alt="" style="width: 200px;">
                         <h3 class="heading text-light title-dark mt-3">{{ $user->hero['title_'.$lang] }} <span class="element text-primary" data-elements="{{ $user->hero['job_'.$lang] }}"></span></h3>
                         <p class="para-desc mx-auto text-white-50">{{ $user->hero['description_'.$lang] }}</p>
                         <div class="mt-4">
@@ -49,7 +49,7 @@
     <!-- HOME END-->
 
     <!-- About Start -->
-    <section class="section pb-3" id="about" style="{{ $user->about->status ? '' : 'display: none' }}">
+    <section class="section pb-3" id="about" style="{{ $user->about && $user->about->status ? '' : 'display: none' }}">
         <div class="container">
             <div class="row align-items-center">
                 <div class="col-lg-5 col-md-5">
@@ -130,7 +130,7 @@
     <!-- About end -->
 
     <!-- Services Start -->
-    <section class="section bg-light" id="services" style="{{ $user->service->status ? '' : 'display: none' }}">
+    <section class="section bg-light" id="services" style="{{ $user->about && $user->service->status ? '' : 'display: none' }}">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
@@ -170,7 +170,7 @@
     <!-- Services End -->
 
     <!-- Resume Start -->
-    <section class="section" id="resume" style="{{ $user->resume->status ? '' : 'display: none' }}">
+    <section class="section" id="resume" style="{{ $user->about && $user->resume->status ? '' : 'display: none' }}">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
@@ -289,6 +289,7 @@
     </section><!--end section-->
     <!-- Skill & CTA End -->
 
+    @if ($user->portfolio)
     <!-- Projects Start -->
     <section class="section bg-light" id="projects">
         <div class="container">
@@ -358,6 +359,7 @@
         </div><!--end container-->
     </section><!--end section-->
     <!-- Projects End -->
+    @endif
 
     <!-- Testimonial Start -->
     <section class="cta-full">

@@ -1,120 +1,65 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace App\Observers;
 
 use App\Models\User;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use App\Http\Requests\UsersRequest;
-use App\Http\Controllers\Controller;
-use App\Support\SaveModel\SaveModel;
 use Illuminate\Support\Facades\Auth;
 
-class UsersController extends Controller
+class UserObserver
 {
-    public function index()
+    /**
+     * Handle the User "created" event.
+     *
+     * @param  \App\Models\User  $user
+     * @return void
+     */
+    public function created(User $user)
     {
-        $users =  User::where('is_admin', 0)->paginate(10);
-
-        return view('admin.users.index', compact(['users']));
     }
 
-    public function create()
+    /**
+     * Handle the User "updated" event.
+     *
+     * @param  \App\Models\User  $user
+     * @return void
+     */
+    public function updated(User $user)
     {
-        return view('admin.users.create');
+        //
     }
 
-    public function edit($id)
+    /**
+     * Handle the User "deleted" event.
+     *
+     * @param  \App\Models\User  $user
+     * @return void
+     */
+    public function deleted(User $user)
     {
-        $user = User::where('is_admin', 0)->findorfail($id);
-
-        return view('admin.users.edit', compact(['user']));
+        //
     }
 
-    public function store(UsersRequest $request)
+    /**
+     * Handle the User "restored" event.
+     *
+     * @param  \App\Models\User  $user
+     * @return void
+     */
+    public function restored(User $user)
     {
-        $data = $request->only($this->userFields());
-
-        try {
-
-            DB::beginTransaction();
-
-            $user = (new SaveModel(new User(), $data))->execute();
-
-            $user->hero()->create($this->heroFields());
-
-            $user->about()->create($this->aboutFields());
-
-            $interest = $user->interest()->create($this->interestFields());
-
-            $interest->interestField()->createMany($this->interestFieldFields());
-
-            $fact = $user->fact()->create($this->factFields());
-
-            $fact->factsField()->createMany($this->factFieldFields());
-
-            $service = $user->service()->create($this->serviceFields());
-
-            $service->servicesField()->createMany($this->serviceFieldFields());
-
-            $resume = $user->resume()->create($this->resumeFields());
-
-            $resume->resumesField()->createMany($this->resumeFieldFields());
-
-            $expertise = $user->expertise()->create($this->expertiseFields());
-
-            foreach ($this->expertiseFieldFields() as $index => $val) {
-
-                $expF = $expertise->expertisesField()->create($val);
-
-                $expF->skills()->createMany($this->skillFields()[$index]);
-            }
-
-            $user->contact()->create($this->contactFields());
-
-            $user->settings()->create($this->settingFields());
-
-            $user->portfolio()->create($this->portfolioFields());
-
-            DB::commit();
-
-            return redirect()->route('users')->with(['success' => 'changed saved successfully']);
-        } catch (\Exception $ex) {
-
-            DB::rollback();
-
-            return redirect()->route('users')->with(['errors_ms' => 'something wrong try again']);
-        }
+        //
     }
 
-    public function update(Request $request, $id)
+    /**
+     * Handle the User "force deleted" event.
+     *
+     * @param  \App\Models\User  $user
+     * @return void
+     */
+    public function forceDeleted(User $user)
     {
-        $data = array_filter($request->only($this->userFields()));
-
-        (new SaveModel(User::findorfail($id), $data))->execute();
-
-        return redirect()->route('users')->with(['success' => 'changed updated successfully']);
-    }
-
-    public function delete($id)
-    {
-        $user = User::where('is_admin', 0)->findorfail($id);
-
-        $user->delete();
-
-        return redirect()->route('users')->with(['success' => 'User has been deleted.']);
-    }
-
-    public function destroy(Request $request)
-    {
-        User::destroy($request->ids);
-
-        return redirect()->route('users')->with(['success' => 'Users has been deleted.']);
-    }
-
-    private function userFields()
-    {
-        return ['name', 'email', 'password', 'status', 'image'];
+        //
     }
 
     private function heroFields()
@@ -492,18 +437,6 @@ class UsersController extends Controller
             'dark_logo_en'          => 'images/dark_logo.png',
             'theme_mode'            => 1,
             'website_status'        => 1,
-        ];
-    }
-
-    private function portfolioFields()
-    {
-        return [
-            'user_id'           => Auth::id(),
-            'title_ar'          => 'اعمالي',
-            'title_en'          => 'POROJECTS',
-            'desc_ar'    => 'من الواضح أنني مصمم ويب. من ذوي الخبرة في جميع مراحل دورة التطوير لمشاريع الويب الديناميكية.',
-            'desc_en'    => 'Obviously I\'m a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.',
-            'status'            => 1,
         ];
     }
 }

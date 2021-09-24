@@ -17,11 +17,17 @@ class ProjectsController extends Controller
                 'settings',
             )->firstOrFail();
 
-        $randImage = $this->getRandomProjectImage($user);
+        if (!$user->categories && !$user->settings) {
+            return abort(404);
+        }
+
+        Project::where('user_id', $user->id)->firstOrFail();
 
         $currentLang = Session::get('currentLang');
 
         $lang = $currentLang ? $currentLang : 'en';
+
+        $randImage = $this->getRandomProjectImage($user);
 
         return view('site.projects.index', compact(['user', 'randImage', 'lang']));
     }

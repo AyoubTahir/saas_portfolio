@@ -4,7 +4,7 @@
             <a href="javascript:void(0);" class="nav-link sidebarCollapse" data-placement="bottom">
                 <i class="flaticon-menu-line-2"></i>
             </a>
-        <a href="{{route('dashboard')}}" class=""> <img src="{{asset('assets/admin/assets/img/logo-3.png')}}" class="img-fluid" alt="logo"></a>
+        <a href="{{route('dashboard')}}" class=""> <img src="{{logo()}}" class="img-fluid" alt="logo"></a>
     </div>
 </header>
 <!-- Tab Mobile View Header -->
@@ -19,28 +19,27 @@
                 <span class="flaticon-mail-10"></span><span class="badge badge-primary">{{ MsgCount() ? MsgCount() : '' }}</span>
             </a>
             <div class="dropdown-menu  position-absolute" aria-labelledby="messageDropdown">
-                <a class="dropdown-item title" href="javascript:void(0);">
+                <a class="dropdown-item title" href="{{ route('messages.index') }}">
                     <i class="flaticon-chat-line mr-3"></i><span>You have {{ MsgCount() }} new messages</span>
                 </a>
-                <a class="dropdown-item" href="javascript:void(0);">
-                    <div class="media">
-                        <div class="usr-img online mr-3">
-                            <img class="usr-img rounded-circle" src="{{asset('assets/admin/assets/img/90x90.jpg')}}" alt="Generic placeholder image">
-                        </div>
-                        <div class="media-body">
-                            <div class="mt-0">
-                                <p class="text mb-0">Browse latest projects...</p>
+                @if (lastMsgs())
+                    @foreach ( lastMsgs() as $message )
+                        <a class="dropdown-item" href="{{ route('messages.show',$message->id) }}">
+                            <div class="media">
+                                <div class="media-body">
+                                    <div class="mt-0">
+                                        <p class="text mb-0">{{ Str::limit($message->subject, 20) }}...</p>
+                                    </div>
+                                    <div class="d-flex justify-content-between">
+                                        <p class="meta-user-name mb-0">{{ $message->full_name }}</p>
+                                        <p class="meta-time mb-0  align-self-center">{{ $message->created_at->diffForHumans() }}</p>
+                                    </div>
+                                </div>
                             </div>
-
-                            <div class="d-flex justify-content-between">
-                                <p class="meta-user-name mb-0">Kara Young</p>
-                                <p class="meta-time mb-0  align-self-center">1 min ago</p>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-
-                <a class="footer dropdown-item" href="javascript:void(0);">
+                        </a>
+                    @endforeach
+                @endif
+                <a class="footer dropdown-item" href="{{ route('messages.index') }}">
                     <div class="btn btn-info mb-3 mr-2 btn-rounded"><i class="flaticon-arrow-right mr-3"></i> View more</div>
                 </a>
             </div>
@@ -60,7 +59,7 @@
                 <a class="dropdown-item" href="{{ route('site.home',str_replace(' ','-', Auth::user()->name)) }}"  target="_blank">
                     <i class="mr-1 flaticon-log"></i> <span>My Website</span>
                 </a>
-                <a class="dropdown-item" href="apps_mailbox.html">
+                <a class="dropdown-item" href="{{route('messages.index')}}">
                     <i class="mr-1 flaticon-email-fill-1"></i> <span>My Inbox</span>
                 </a>
                 <div class="dropdown-divider"></div>

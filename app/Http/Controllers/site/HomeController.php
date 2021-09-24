@@ -29,6 +29,11 @@ class HomeController extends Controller
 
         $lang = $currentLang ? $currentLang : 'en';
 
+        if ($user->is_admin) {
+            //return response()->view('errors.404', [], 404);
+            return abort(404);
+        }
+
         return view('site.home.index', compact(['user', 'lang']));
     }
 }

@@ -27,6 +27,11 @@
             height: 100% !important;
             width: 100% !important;
         }
+        #sidebar .navbar-brand .img-fluid {
+            width: 70px !important;
+            margin-left: 8px !important;
+            margin-top: 25px !important;
+        }
     </style>
 
 </head>

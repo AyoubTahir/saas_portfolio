@@ -27,8 +27,9 @@ Route::get('/{username}', [HomeController::class, 'index'])->name('site.home');
 Route::get('/{username}/projects', [ProjectsController::class, 'index'])->name('site.porojects');
 Route::get('/{username}/projects/{id}', [ProjectsController::class, 'show'])->name('site.porojects.show');
 Route::post('/message/store/{user_id}', [MessageController::class, 'store'])->name('message.store');
+
 //admin
-Route::prefix('t-admin')->group(function () {
+Route::prefix('t-admin')->middleware('auth')->group(function () {
 
     //dashboard
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
@@ -121,6 +122,7 @@ Route::prefix('t-admin')->group(function () {
 
     //messages
     Route::get('/messages', [MessageController::class, 'index'])->name('messages.index');
+    Route::get('/messages/important', [MessageController::class, 'important'])->name('messages.important');
     Route::get('/messages/{id}', [MessageController::class, 'show'])->name('messages.show');
     Route::post('/messages/destroy', [MessageController::class, 'destroy'])->name('messages.destroy');
 

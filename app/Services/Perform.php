@@ -17,8 +17,21 @@ class Perform
 
         if (!$all) {
             return $data->first();
+        } elseif (is_numeric($all)) {
+            return $data->paginate($all);
         } else {
             return $data->get();
+        }
+    }
+
+    public static function indexWithFind($Modal, array $whereArray, $all = false)
+    {
+        $data = $Modal::where('user_id', Auth::id())->where($whereArray);
+
+        if (!$all) {
+            return $data->orderBy('created_at', 'DESC')->paginate(10);
+        } else {
+            return $data->first();
         }
     }
 

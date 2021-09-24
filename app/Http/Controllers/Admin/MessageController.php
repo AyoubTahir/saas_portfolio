@@ -16,7 +16,14 @@ class MessageController extends Controller
 
     public function index()
     {
-        $messages = Perform::index(Message::class, null, true)->where('important', 0);
+        $messages = Perform::index(Message::class, null, 10);
+
+        return view('admin.contact.messages', compact(['messages']));
+    }
+
+    public function important()
+    {
+        $messages = Perform::indexWithFind(Message::class, ['important' => 1]);
 
         return view('admin.contact.messages', compact(['messages']));
     }

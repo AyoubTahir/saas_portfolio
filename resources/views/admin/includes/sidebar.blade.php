@@ -6,14 +6,17 @@
     <nav id="sidebar">
 
         <ul class="navbar-nav theme-brand flex-row  d-none d-lg-flex">
-            <li class="nav-item d-flex">
-                <a href="{{route('dashboard')}}" class="navbar-brand">
-                    <img src="{{asset('assets/admin/assets/img/logo-3.png')}}" class="img-fluid" alt="logo">
-                </a>
-                <p class="border-underline"></p>
-            </li>
+            @if (logo())
+               <li class="nav-item d-flex">
+                    <a href="{{route('dashboard')}}" class="navbar-brand">
+                        <img src="{{logo()}}" class="img-fluid" alt="logo">
+                    </a>
+                    <p class="border-underline"></p>
+                </li>
+            @endif
+
             <li class="nav-item theme-text">
-                <a href="{{route('dashboard')}}" class="nav-link"> Tahir </a>
+                <a href="{{route('dashboard')}}" class="nav-link"> {{logo(true)}} </a>
             </li>
         </ul>
 
@@ -67,7 +70,7 @@
             <li class="menu">
                 <a href="#portfolio" data-toggle="collapse" aria-expanded="false" class="dropdown-toggle">
                     <div class="">
-                        <i class="flaticon-home-line"></i>
+                        <i class="flaticon-simple-screen-line"></i>
                         <span>Portfolio</span>
                     </div>
                     <div>
@@ -122,7 +125,7 @@
             <li class="menu">
                 <a href="{{route('settings.index')}}" aria-expanded="false" class="dropdown-toggle {{ (request()->is('t-admin/settings')) ? 'active-menu' : '' }}">
                     <div class="">
-                        <i class="flaticon-users {{ (request()->is('t-admin/settings')) ? 'active-menu' : '' }}"></i>
+                        <i class="flaticon-settings-4 {{ (request()->is('t-admin/settings')) ? 'active-menu' : '' }}"></i>
                         <span>Settings</span>
                     </div>
                 </a>
