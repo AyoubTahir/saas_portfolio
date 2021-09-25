@@ -15,6 +15,7 @@ use App\Http\Controllers\admin\DashboardController;
 use App\Http\Controllers\admin\HeroSectionController;
 use App\Http\Controllers\Admin\AboutSectionController;
 use App\Http\Controllers\Admin\FactsSectionController;
+use App\Http\Controllers\Admin\ClientsSectionController;
 use App\Http\Controllers\Admin\ResumesSectionController;
 use App\Http\Controllers\Admin\InterestSectionController;
 use App\Http\Controllers\Admin\ServicesSectionController;
@@ -87,6 +88,15 @@ Route::prefix('t-admin')->middleware('auth')->group(function () {
     Route::post('/expertises/skills/update/{id}', [ExpertisesSectionController::class, 'updateSkillExpertises'])->name('home.skills.update');
     Route::post('/expertises/skills/delete/{id}', [ExpertisesSectionController::class, 'deleteSkillExpertises'])->name('home.skills.delete');
     Route::post('/expertises/skills/destroy', [ExpertisesSectionController::class, 'destroySkillExpertises'])->name('home.skills.destroy');
+
+    Route::get('/clients', [ClientsSectionController::class, 'clientsSection'])->name('home.clients');
+    Route::post('/clients/update', [ClientsSectionController::class, 'updateClientsSection'])->name('home.clients.updatesection');
+    Route::post('/clients/store', [ClientsSectionController::class, 'storeClients'])->name('home.clients.store');
+    Route::get('/clients/show/{id}', [ClientsSectionController::class, 'showClients'])->name('home.clients.show');
+    Route::get('/clients/edit/{id}', [ClientsSectionController::class, 'editClients'])->name('home.clients.edit');
+    Route::post('/clients/update/{id}', [ClientsSectionController::class, 'updateClients'])->name('home.clients.update');
+    Route::post('/clients/delete/{id}', [ClientsSectionController::class, 'deleteClients'])->name('home.clients.delete');
+    Route::post('/clients/destroy', [ClientsSectionController::class, 'destroyClients'])->name('home.clients.destroy');
 
     Route::get('/portfolio', [PortfolioSectionController::class, 'portfolioSection'])->name('portfolio.index');
     Route::post('/portfolio/update', [PortfolioSectionController::class, 'updatePortfolioSection'])->name('portfolio.updatesection');

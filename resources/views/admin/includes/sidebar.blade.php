@@ -64,6 +64,9 @@
                         <a href="{{route('home.expertises')}}"> Expertise Section </a>
                     </li>
                     <li>
+                        <a href="{{route('home.clients')}}"> Testimonial Section </a>
+                    </li>
+                    <li>
                 </ul>
             </li>
 

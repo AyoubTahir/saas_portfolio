@@ -108,4 +108,8 @@ class User extends Authenticatable implements SaveableInterface
     {
         return $this->hasOne(Contact::class, 'user_id', 'id');
     }
+    public function clients()
+    {
+        return $this->hasOne(Client::class, 'user_id', 'id');
+    }
 }

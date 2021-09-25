@@ -9,6 +9,7 @@ use App\Http\Requests\UsersRequest;
 use App\Http\Controllers\Controller;
 use App\Support\SaveModel\SaveModel;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
 {
@@ -100,6 +101,8 @@ class UsersController extends Controller
     {
         $user = User::where('is_admin', 0)->findorfail($id);
 
+        Storage::disk('uploads')->delete($user->image);
+
         $user->delete();
 
         return redirect()->route('users')->with(['success' => 'User has been deleted.']);
@@ -107,7 +110,14 @@ class UsersController extends Controller
 
     public function destroy(Request $request)
     {
-        User::destroy($request->ids);
+        foreach ($request->ids as $id) {
+
+            $user = User::where('is_admin', 0)->findorfail($id);
+
+            Storage::disk('uploads')->delete($user->image);
+
+            $user->delete();
+        }
 
         return redirect()->route('users')->with(['success' => 'Users has been deleted.']);
     }

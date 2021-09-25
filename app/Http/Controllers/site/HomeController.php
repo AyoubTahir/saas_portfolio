@@ -11,19 +11,7 @@ class HomeController extends Controller
 {
     public function index($username)
     {
-        $user = User::where('name', str_replace('-', ' ', $username))
-            ->with(
-                'hero',
-                'about',
-                'interest.interestField',
-                'fact.factsField',
-                'service.servicesField',
-                'resume.resumesField',
-                'portfolio',
-                'categories.projects.images',
-                'contact',
-                'settings',
-            )->firstOrFail();
+        $user = User::where('name', str_replace('-', ' ', $username))->firstOrFail();
 
         $currentLang = Session::get('currentLang');
 
@@ -36,4 +24,20 @@ class HomeController extends Controller
 
         return view('site.home.index', compact(['user', 'lang']));
     }
+
+    /*
+    ->with(
+                'hero',
+                'about',
+                'interest.interestField',
+                'fact.factsField',
+                'service.servicesField',
+                'resume.resumesField',
+                'portfolio',
+                'categories.projects.images',
+                'clients',
+                'contact',
+                'settings',
+            )
+    */
 }

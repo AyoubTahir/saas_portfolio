@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     @yield('page_css')
-    <title>Laravel</title>
+    <title>{{ ucwords(str_replace('-', ' ', $user->name)) }}</title>
 
 </head>
 <body>

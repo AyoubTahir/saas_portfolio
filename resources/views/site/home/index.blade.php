@@ -371,10 +371,10 @@
                             <div class="col-12 text-center">
                                 <div class="section-title">
                                     <div class="titles">
-                                        <h4 class="title title-line text-uppercase mb-4 pb-4">Clients say</h4>
+                                        <h4 class="title title-line text-uppercase mb-4 pb-4">{{$user->clients['title_'.$lang]}}</h4>
                                         <span></span>
                                     </div>
-                                    <p class="text-muted mx-auto para-desc mb-0">Obviously I'm a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.</p>
+                                    <p class="text-muted mx-auto para-desc mb-0">{{$user->clients['desc_'.$lang]}}</p>
                                 </div>
                             </div><!--end col-->
                         </div><!--end row-->
@@ -382,174 +382,47 @@
                         <div class="row">
                             <div class="col-12">
                                 <div id="clients-testi" class="owl-carousel mt-3">
-                                    <!--Start Client-->
-                                    <div class="client-review border rounded m-3 mb-4 position-relative shadow">
-                                        <div class="review-star">
-                                            <ul class="list-unstyled float-right mb-0">
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                            </ul>
+                                    @if ($user->clients->clientsField)
+                                        @foreach ( $user->clients->clientsField as $client )
+                                            <!--Start Client-->
+                                            <div class="client-review border rounded m-3 mb-4 position-relative shadow">
+                                                <div class="review-star">
+                                                    <ul class="list-unstyled float-right mb-0">
+                                                        @for ($i = 0; $i < 5 ; $i++)
+                                                            @if(($client->rating) % 2 == 1 && $client->rating == ($i*2)+1)
+                                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star-half"></i></li>
+                                                            @elseif($i < $client->rating/2)
+                                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
+                                                            @else
+                                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star-outline"></i></li>
+                                                            @endif
+                                                        @endfor
+                                                    </ul>
 
-                                            <div class="review-base">
-                                                <h6 class="title">" Design Quality "</h6>
-                                            </div>
-                                        </div><!--end review star-->
+                                                    <div class="review-base">
+                                                        <h6 class="title">" {{ $client['project_'.$lang] }} "</h6>
+                                                    </div>
+                                                </div><!--end review star-->
 
-                                        <p class="text-muted review-para font-italic mt-3 mb-3">There are many variations of passages of Lorem Ipsum available, by injected humour, or randomised words which don't look even slightly believable. </p>
-                                        <div class="reviewer d-flex align-items-center">
-                                            <img src="{{ asset('assets/images/client/01.jpg') }}" class="img-fluid rounded-circle avatar avatar-small mr-3" alt="">
-                                            <div class="content">
-                                                <h5 class="name mb-0">Erich Bissonette</h5>
-                                                <small class="designation text-muted">Oppo</small>
-                                            </div>
-                                        </div><!--end reviewer-->
-                                    </div><!--end client review-->
-                                    <!--End Client-->
-
-                                    <!--Start Client-->
-                                    <div class="client-review border rounded m-3 mb-4 position-relative shadow">
-                                        <div class="review-star">
-                                            <ul class="list-unstyled float-right mb-0">
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star-half"></i></li>
-                                            </ul>
-
-                                            <div class="review-base">
-                                                <h6 class="title">" Code Quality "</h6>
-                                            </div>
-                                        </div><!--end review star-->
-
-                                        <p class="text-muted review-para font-italic mt-3 mb-3">There are many variations of passages of Lorem Ipsum available, but the majority have suffered alteration in some form</p>
-                                        <div class="reviewer d-flex align-items-center">
-                                            <img src="{{ asset('assets/images/client/02.jpg') }}" class="img-fluid rounded-circle avatar avatar-small mr-3" alt="">
-                                            <div class="content">
-                                                <h5 class="name mb-0">Tina Meyer</h5>
-                                                <small class="designation text-muted">Vivo</small>
-                                            </div>
-                                        </div><!--end reviewer-->
-                                    </div><!--end client review-->
-                                    <!--End Client-->
-
-                                    <!--Start Client-->
-                                    <div class="client-review border rounded m-3 mb-4 position-relative shadow">
-                                        <div class="review-star">
-                                            <ul class="list-unstyled float-right mb-0">
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                            </ul>
-
-                                            <div class="review-base">
-                                                <h6 class="title">" Feature Availability "</h6>
-                                            </div>
-                                        </div><!--end review star-->
-
-                                        <p class="text-muted review-para font-italic mt-3 mb-3">If you are going to use a passage of Lorem Ipsum, you need to be sure there isn't anything embarrassing hidden in the middle of text.</p>
-                                        <div class="reviewer d-flex align-items-center">
-                                            <img src="{{ asset('assets/images/client/03.jpg') }}" class="img-fluid rounded-circle avatar avatar-small mr-3" alt="">
-                                            <div class="content">
-                                                <h5 class="name mb-0">Sharon Murdock</h5>
-                                                <small class="designation text-muted">Apple</small>
-                                            </div>
-                                        </div><!--end reviewer-->
-                                    </div><!--end client review-->
-                                    <!--End Client-->
-
-                                    <!--Start Client-->
-                                    <div class="client-review border rounded m-3 mb-4 position-relative shadow">
-                                        <div class="review-star">
-                                            <ul class="list-unstyled float-right mb-0">
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                            </ul>
-
-                                            <div class="review-base">
-                                                <h6 class="title">" Customizability "</h6>
-                                            </div>
-                                        </div><!--end review star-->
-
-                                        <p class="text-muted review-para font-italic mt-3 mb-3">All the Lorem Ipsum generators on the Internet tend to repeat predefined chunks as necessary, making this the first true generator on the Internet.</p>
-                                        <div class="reviewer d-flex align-items-center">
-                                            <img src="{{ asset('assets/images/client/04.jpg') }}" class="img-fluid rounded-circle avatar avatar-small mr-3" alt="">
-                                            <div class="content">
-                                                <h5 class="name mb-0">Jesse Hunt</h5>
-                                                <small class="designation text-muted">Samsung</small>
-                                            </div>
-                                        </div><!--end reviewer-->
-                                    </div><!--end client review-->
-                                    <!--End Client-->
-
-                                    <!--Start Client-->
-                                    <div class="client-review border rounded m-3 mb-4 position-relative shadow">
-                                        <div class="review-star">
-                                            <ul class="list-unstyled float-right mb-0">
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star-half"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star-outline"></i></li>
-                                            </ul>
-
-                                            <div class="review-base">
-                                                <h6 class="title">" Flexibility "</h6>
-                                            </div>
-                                        </div><!--end review star-->
-
-                                        <p class="text-muted review-para font-italic mt-3 mb-3">There are many variations of passages of Lorem Ipsum available, by injected humour, or randomised words which don't look even slightly believable. </p>
-                                        <div class="reviewer d-flex align-items-center">
-                                            <img src="{{ asset('assets/images/client/05.jpg') }}" class="img-fluid rounded-circle avatar avatar-small mr-3" alt="">
-                                            <div class="content">
-                                                <h5 class="name mb-0">Andrea Toy</h5>
-                                                <small class="designation text-muted">Nokia</small>
-                                            </div>
-                                        </div><!--end reviewer-->
-                                    </div><!--end client review-->
-                                    <!--End Client-->
-
-                                    <!--Start Client-->
-                                    <div class="client-review border rounded m-3 mb-4 position-relative shadow">
-                                        <div class="review-star">
-                                            <ul class="list-unstyled float-right mb-0">
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                                <li class="list-inline-item text-primary"><i class="mdi mdi-star"></i></li>
-                                            </ul>
-
-                                            <div class="review-base">
-                                                <h6 class="title">" Development "</h6>
-                                            </div>
-                                        </div><!--end review star-->
-
-                                        <p class="text-muted review-para font-italic mt-3 mb-3"> It uses a dictionary of over 200 Latin words, combined with a handful of model sentence structures, to generate Lorem Ipsum which looks reasonable.</p>
-                                        <div class="reviewer d-flex align-items-center">
-                                            <img src="{{ asset('assets/images/client/06.jpg') }}" class="img-fluid rounded-circle avatar avatar-small mr-3" alt="">
-                                            <div class="content">
-                                                <h5 class="name mb-0">Jay Allums</h5>
-                                                <small class="designation text-muted">RedMI</small>
-                                            </div>
-                                        </div><!--end reviewer-->
-                                    </div><!--end client review-->
-                                    <!--End Client-->
+                                                <p class="text-muted review-para font-italic mt-3 mb-3">{{ $client['opinion_'.$lang] }}</p>
+                                                <div class="reviewer d-flex align-items-center">
+                                                    <img src="{{ $client->image ?  asset('uploads/'.$client->image) : asset('assets/images/client/01.jpg') }}" class="img-fluid rounded-circle avatar avatar-small mr-3" alt="">
+                                                    <div class="content">
+                                                        <h5 class="name mb-0">{{ $client['name_'.$lang] }}</h5>
+                                                        <small class="designation text-muted">{{ $client['job_'.$lang] }}</small>
+                                                    </div>
+                                                </div><!--end reviewer-->
+                                            </div><!--end client review-->
+                                            <!--End Client-->
+                                        @endforeach
+                                    @endif
                                 </div><!--end testi review-->
                             </div><!--end col-->
                         </div><!--end row-->
                     </div> <!-- end about detail -->
                 </div> <!-- end col -->
 
-                <div class="col-lg-4 offset-lg-8 padding-less img order-1" style="background-image:url('{{ asset('assets/images/testi.jpg') }}')" data-jarallax='{"speed": 0.5}'></div><!-- end col -->
+                <div class="col-lg-4 offset-lg-8 padding-less img order-1" style="background-image:url('{{ $user->clients->image ? asset('uploads/'.$user->clients->image) : asset('assets/images/testi.jpg') }}')" data-jarallax='{"speed": 0.5}'></div><!-- end col -->
             </div><!--end row-->
         </div><!--end container fluid-->
     </section><!--end section-->

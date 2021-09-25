@@ -96,4 +96,11 @@ class Perform
 
         return $row->firstOrFail();
     }
+
+    public static function findFirstOrFailSmodel($Model, $secModel, $id, $col)
+    {
+        $rowS =  $secModel::where('user_id', Auth::id())->firstOrFail();
+
+        return  $Model::where('id', $id)->where($col, $rowS->id)->firstOrFail();
+    }
 }
