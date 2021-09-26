@@ -93,7 +93,7 @@
                 </ul>
             </li>
 
-            <li class="menu">
+            <li class="menu" style="display: {{ Auth::user()->is_admin == 1 ? '' : 'none' }}">
                 <a href="{{route('users')}}" aria-expanded="false" class="dropdown-toggle {{ (request()->is('t-admin/users')) ? 'active-menu' : '' }}">
                     <div class="">
                         <i class="flaticon-users {{ (request()->is('t-admin/users')) ? 'active-menu' : '' }}"></i>

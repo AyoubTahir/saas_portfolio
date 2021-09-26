@@ -13,6 +13,11 @@ use Illuminate\Support\Facades\Storage;
 
 class UsersController extends Controller
 {
+    public function __construct()
+    {
+        $this->middleware('isadmin');
+    }
+
     public function index()
     {
         $users =  User::where('is_admin', 0)->paginate(10);
@@ -77,13 +82,24 @@ class UsersController extends Controller
 
             $user->portfolio()->create($this->portfolioFields());
 
+            foreach ($this->categoriesFields() as $index => $val) {
+
+                $category = $user->categories()->create($val);
+
+                $category->projects()->create($this->projectsFields($user->id)[$index]);
+            }
+
+            $client = $user->clients()->create($this->clientFields());
+
+            $client->clientsField()->createMany($this->clientFieldFields());
+
             DB::commit();
 
             return redirect()->route('users')->with(['success' => 'changed saved successfully']);
         } catch (\Exception $ex) {
 
             DB::rollback();
-
+            dd($ex->getMessage());
             return redirect()->route('users')->with(['errors_ms' => 'something wrong try again']);
         }
     }
@@ -130,7 +146,6 @@ class UsersController extends Controller
     private function heroFields()
     {
         return [
-            'user_id' => Auth::id(),
             'title_ar' => 'طاهر ايوب',
             'title_en' => 'Tahir Ayoub',
             'job_ar' => 'مصمم ويب , مطور ويب , مصور',
@@ -139,15 +154,14 @@ class UsersController extends Controller
             'description_en' => 'Obviously I\'m a Web Designer. Web Developer with over 3 years of experience. Experienced with all stages of the development cycle for dynamic web projects.',
             'button_ar' => 'اتصل بي',
             'button_en' => 'Contact me',
-            'cover' => 'images/hero_back.jpg',
-            'image' => 'images/hero_img.png'
+            'cover' => 'images/bg-pages.jpg',
+            'image' => 'images/hero.jpg'
         ];
     }
 
     private function aboutFields()
     {
         return [
-            'user_id' => Auth::id(),
             'full_name_ar' => 'طاهر ايوب',
             'full_name_en' => 'Tahir Ayoub',
             'sub_title_ar' => 'أنا شغوف',
@@ -166,7 +180,6 @@ class UsersController extends Controller
     private function interestFields()
     {
         return [
-            'user_id'           => Auth::id(),
             'title_ar'          => 'الهوايات والاهتمامات',
             'title_en'          => 'HOBBIES & INTERESTS',
             'description_ar'    => 'من الواضح أنني مصمم ويب. من ذوي الخبرة في جميع مراحل دورة التطوير لمشاريع الويب الديناميكية.',
@@ -224,10 +237,9 @@ class UsersController extends Controller
     private function factFields()
     {
         return [
-            'user_id'           => Auth::id(),
             'title_ar'          => 'حقائق',
             'title_en'          => 'Facts',
-            'cover'             => 'images/fact.jpg',
+            'cover'             => 'images/facts.jpg',
             'status'            => 1,
         ];
     }
@@ -236,26 +248,26 @@ class UsersController extends Controller
     {
         return [
             [
-                'title_ar'          => 'Happy Client',
-                'title_en'          => 'عميل سعيد',
+                'title_ar'          => 'عميل سعيد',
+                'title_en'          => 'Happy Client',
                 'number'            => '1251',
                 'icon'              => 'smile',
             ],
             [
-                'title_ar'          => 'Award Won',
-                'title_en'          => 'فاز بالجائزة',
+                'title_ar'          => 'فاز بالجائزة',
+                'title_en'          => 'Award Won',
                 'number'            => '15',
                 'icon'              => 'award',
             ],
             [
-                'title_ar'          => 'Cup of Coffee',
-                'title_en'          => 'كوب من القهوة',
+                'title_ar'          => 'كوب من القهوة',
+                'title_en'          => 'Cup of Coffee',
                 'number'            => '3261',
                 'icon'              => 'coffee',
             ],
             [
-                'title_ar'          => 'Project Complete',
-                'title_en'          => 'اكتمل المشروع',
+                'title_ar'          => 'اكتمل المشروع',
+                'title_en'          => 'Project Complete',
                 'number'            => '36',
                 'icon'              => 'thumbs-up',
             ],
@@ -325,7 +337,6 @@ class UsersController extends Controller
     private function resumeFields()
     {
         return [
-            'user_id'           => Auth::id(),
             'title_ar'          => 'المشاركة في العمل',
             'title_en'          => 'WORK PARTICIPATION',
             'description_ar'    => 'من الواضح أنني مصمم ويب. من ذوي الخبرة في جميع مراحل دورة التطوير لمشاريع الويب الديناميكية.',
@@ -383,12 +394,11 @@ class UsersController extends Controller
     private function expertiseFields()
     {
         return [
-            'user_id'           => Auth::id(),
             'title_ar'          => 'خبرة العمل',
             'title_en'          => 'Work Expertise',
             'description_ar'    => 'من الواضح أنني مصمم ويب. من ذوي الخبرة في جميع مراحل دورة التطوير لمشاريع الويب الديناميكية.',
             'description_en'    => 'Obviously I\'m a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.',
-            'image'             => 'images/expertise.jpg',
+            'image'             => 'images/expertise-clients.jpg',
             'status'            => 1,
         ];
     }
@@ -466,7 +476,6 @@ class UsersController extends Controller
     private function contactFields()
     {
         return [
-            'user_id'           => Auth::id(),
             'title_ar'          => 'اتصل بي',
             'title_en'          => 'CONTACT ME',
             'desc_ar'           => 'من الواضح أنني مصمم ويب. من ذوي الخبرة في جميع مراحل دورة التطوير لمشاريع الويب الديناميكية.',
@@ -487,7 +496,6 @@ class UsersController extends Controller
     private function settingFields()
     {
         return [
-            'user_id'           => Auth::id(),
             'website_name_ar'       => 'طاهر',
             'website_name_en'       => 'Tahir',
             'footer_desc_ar'        => 'من الواضح أنني مصمم ويب. من ذوي الخبرة في جميع مراحل دورة التطوير لمشاريع الويب الديناميكية.',
@@ -496,10 +504,10 @@ class UsersController extends Controller
             'instagram'             => 'https://www.instagram.com/',
             'twiter'                => 'https://twitter.com/',
             'linkedin'              => 'https://linkedin.com',
-            'light_logo_ar'         => 'images/light_logo.png',
-            'light_logo_en'         => 'images/light_logo.png',
-            'dark_logo_ar'          => 'images/dark_logo.png',
-            'dark_logo_en'          => 'images/dark_logo.png',
+            'light_logo_ar'         => 'images/light_ar_logo.png',
+            'light_logo_en'         => 'images/light_en_logo.png',
+            'dark_logo_ar'          => 'images/dark_ar_logo.png',
+            'dark_logo_en'          => 'images/dark_en_logo.png',
             'theme_mode'            => 1,
             'website_status'        => 1,
         ];
@@ -508,12 +516,113 @@ class UsersController extends Controller
     private function portfolioFields()
     {
         return [
-            'user_id'           => Auth::id(),
             'title_ar'          => 'اعمالي',
             'title_en'          => 'POROJECTS',
             'desc_ar'    => 'من الواضح أنني مصمم ويب. من ذوي الخبرة في جميع مراحل دورة التطوير لمشاريع الويب الديناميكية.',
             'desc_en'    => 'Obviously I\'m a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.',
             'status'            => 1,
+        ];
+    }
+
+    private function categoriesFields()
+    {
+        return [
+            [
+                'name_ar'           => 'مواقع الويب',
+                'name_en'           => 'Websites',
+            ],
+            [
+                'name_ar'           => 'التطبيقات',
+                'name_en'           => 'Applications',
+            ],
+        ];
+    }
+
+    private function projectsFields($id)
+    {
+        return [
+            [
+                'user_id'       => $id,
+                'title_ar'      => 'موقع الكتروني',
+                'title_en'      => 'WebSite',
+                'desc_ar'       => 'من الواضح أنني مصمم ويب. من ذوي الخبرة في جميع مراحل دورة التطوير لمشاريع الويب الديناميكية.',
+                'desc_en'       => 'Obviously I\'m a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.',
+                'client_ar'     => 'أيوب طاهر',
+                'client_en'     => 'Ayoub Tahir',
+                'subject_ar'    => 'موقع التجارة الإلكترونية لشركة كبيرة',
+                'subject_en'    => 'Ecommerce Website For A Big Company',
+                'website'       => 'www.google.com',
+                'date'          => '2015-05-01',
+                'thumbnail'     => 'images/project.jpg'
+            ],
+            [
+                'user_id'       => $id,
+                'title_ar'      => 'تطبيق موبايل',
+                'title_en'      => 'Mobile app',
+                'desc_ar'       => 'من الواضح أنني مصمم ويب. من ذوي الخبرة في جميع مراحل دورة التطوير لمشاريع الويب الديناميكية.',
+                'desc_en'       => 'Obviously I\'m a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.',
+                'client_ar'     => 'أيوب طاهر',
+                'client_en'     => 'Ayoub Tahir',
+                'subject_ar'    => 'تطبيق موبايل لشركة كبيرة',
+                'subject_en'    => 'Mobile app For A Big Company',
+                'website'       => 'www.google.com',
+                'date'          => '2015-05-01',
+                'thumbnail'     => 'images/project.jpg'
+            ],
+        ];
+    }
+
+    private function clientFields()
+    {
+        return [
+            'title_ar'          => 'رأي العملاء',
+            'title_en'          => 'TESTIMONIALS',
+            'desc_ar'           => 'من الواضح أنني مصمم ويب. من ذوي الخبرة في جميع مراحل دورة التطوير لمشاريع الويب الديناميكية.',
+            'desc_en'           => 'Obviously I\'m a Web Designer. Experienced with all stages of the development cycle for dynamic web projects.',
+            'image'             => 'images/expertise-clients.jpg',
+            'status'            => 1,
+        ];
+    }
+
+    private function clientFieldFields()
+    {
+        return [
+            [
+                'project_ar'    => 'موقع الكتروني',
+                'project_en'    => 'website',
+                'name_ar'       => 'طاهر ايوب',
+                'name_en'       => 'Tahir Ayoub',
+                'job_ar'        => 'مطور ويب',
+                'job_en'        => 'Web Developer',
+                'opinion_ar'    => 'هناك العديد من الأشكال المتوفرة لنصوص لوريم إيبسوم ، عن طريق إدخال الدعابة أو الكلمات العشوائية التي لا تبدو قابلة للتصديق إلى حد ما.',
+                'opinion_en'    => 'There are many variations of passages of Lorem Ipsum available, by injected humour, or randomised words which don\'t look even slightly believable.',
+                'rating'        => 1,
+                'image'         => 'images/hero.jpg'
+            ],
+            [
+                'project_ar'    => 'تطبيق الويب',
+                'project_en'    => 'Web Application',
+                'name_ar'       => 'أنس العويري',
+                'name_en'       => 'Anas Elouiri',
+                'job_ar'        => 'مصمم ويب',
+                'job_en'        => 'Web Designe',
+                'opinion_ar'    => 'هناك العديد من الأشكال المتوفرة لنصوص لوريم إيبسوم ، عن طريق إدخال الدعابة أو الكلمات العشوائية التي لا تبدو قابلة للتصديق إلى حد ما.',
+                'opinion_en'    => 'There are many variations of passages of Lorem Ipsum available, by injected humour, or randomised words which don\'t look even slightly believable.',
+                'rating'        => 5,
+                'image'         => 'images/hero.jpg'
+            ],
+            [
+                'project_ar'    => 'تصميم لوحة القيادة',
+                'project_en'    => 'Dashboard Design',
+                'name_ar'       => 'رضا طه',
+                'name_en'       => 'Reda Taha',
+                'job_ar'        => 'مصور',
+                'job_en'        => 'Photographer',
+                'opinion_ar'    => 'هناك العديد من الأشكال المتوفرة لنصوص لوريم إيبسوم ، عن طريق إدخال الدعابة أو الكلمات العشوائية التي لا تبدو قابلة للتصديق إلى حد ما.',
+                'opinion_en'    => 'There are many variations of passages of Lorem Ipsum available, by injected humour, or randomised words which don\'t look even slightly believable.',
+                'rating'        => 4,
+                'image'         => 'images/hero.jpg'
+            ],
         ];
     }
 }

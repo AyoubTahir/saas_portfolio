@@ -34,9 +34,19 @@
         }
     </style>
 
+    @if (Auth::user()->first_time)
+        <!-- BEGIN PAGE LEVEL PLUGINS -->
+        <link href="{{ asset('assets/admin/plugins/animate/animate.css')}}" rel="stylesheet" type="text/css" />
+        <link href="{{ asset('assets/admin/assets/css/modals/component.css')}}" rel="stylesheet" type="text/css" />
+        <!-- END PAGE LEVEL PLUGINS -->
+
+        <!--  BEGIN CUSTOM STYLE FILE  -->
+        <link href="{{ asset('assets/admin/assets/css/ui-kit/custom-modal.css')}}" rel="stylesheet" type="text/css" />
+        <!--  END CUSTOM STYLE FILE  -->
+    @endif
+
 </head>
 <body class="default-sidebar">
-
 
 <!--  BEGIN HEADER  -->
 @include('admin.includes.header')
@@ -119,14 +129,42 @@
 </footer>
 <!--  END FOOTER  -->
 
+@if (Auth::user()->first_time)
+    <button id="first_time" class="btn btn-button-4 rounded btn-block md-trigger" data-modal="modal-12">first Time</button>
 
-@yield('page_model')
+    <div class="md-overlay"></div>
 
+    <div class="md-modal md-effect-12" id="modal-12">
+        <div class="md-content">
+            <h3 class="pt-4">Welcome {{ ucwords(Auth::user()->name) }} To Your Portfolio Website Dashboard</h3>
+            <div>
+                <p class="mb-4">!!Please Read This Befor Start!!</p>
+                <ul>
+                    <li class="mb-2">Your website has been generated automatically</li>
+                    <li class="mb-2">Please Don't Forget To Change The Dummy Data</li>
+                    <li class="mb-2"><a href="{{ route('site.home',str_replace(' ','-', Auth::user()->name)) }}"  target="_blank" style="color: #006eff;font-size: 17px;">Visit Website</a></li>
+                </ul>
+                <button class="btn btn-button-4 btn-rounded md-close mb-3">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="md-overlay"></div>
+@endif
 
 <!-- js scripts Start -->
 @include('admin.includes.js_scripts')
 <!-- end js scripts -->
 
+@if (Auth::user()->first_time)
+    <!-- BEGIN PAGE LEVEL PLUGINS -->
+    <script src="{{ asset('assets/admin/assets/js/modal/classie.js')}}"></script>
+    <script src="{{ asset('assets/admin/assets/js/modal/modalEffects.js')}}"></script>
+    <!-- END PAGE LEVEL PLUGINS -->
+    <script>
+        $('#first_time').click()
+    </script>
+@endif
 
 </body>
 </html>

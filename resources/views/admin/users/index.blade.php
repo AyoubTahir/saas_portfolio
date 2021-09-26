@@ -76,10 +76,12 @@
                                         </td>
                                         <td>
                                             <div class="d-flex">
-                                                <div class="usr-img-frame mr-2 rounded-circle">
-                                                    <img alt="admin-profile" class="img-fluid rounded-circle" src="{{ asset('uploads/'.$user->image) }}">
-                                                </div>
-                                                <p class="align-self-center mb-0">{{ $user->name }}</p>
+                                                <a class="d-flex" href="{{ route('site.home',str_replace(' ','-', $user->name)) }}"  target="_blank">
+                                                    <div class="usr-img-frame mr-2 rounded-circle">
+                                                        <img alt="admin-profile" class="img-fluid rounded-circle" src="{{ asset('uploads/'.$user->image) }}">
+                                                    </div>
+                                                    <p class="align-self-center mb-0">{{ $user->name }}</p>
+                                                </a>
                                             </div>
                                         </td>
                                         <td>{{ $user->email }}</td>

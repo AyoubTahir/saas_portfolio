@@ -24,12 +24,20 @@ class Portfolio extends Model implements SaveableInterface
             'title_en'      => StringField::new(),
             'desc_ar'       => StringField::new(),
             'desc_en'       => StringField::new(),
-            'status'       => BooleanField::new(),
+            'status'        => StringField::new(),
         ];
     }
 
     public function user()
     {
         return $this->belongsTo(User::class, 'user_id', 'id');
+    }
+
+    public function incrementViewsCount()
+    {
+
+        $this->views++;
+
+        return $this->save();
     }
 }

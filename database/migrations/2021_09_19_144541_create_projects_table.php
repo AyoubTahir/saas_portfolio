@@ -28,6 +28,7 @@ class CreateProjectsTable extends Migration
             $table->string('website');
             $table->date('date');
             $table->string('thumbnail');
+            $table->bigInteger('views')->unsigned()->default(0)->index();
             $table->timestamps();
 
             $table->foreign('category_id')->references('id')->on('categories')->onDelete('cascade');

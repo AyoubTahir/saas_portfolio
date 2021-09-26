@@ -27,22 +27,22 @@
             <div class="collapse navbar-collapse" id="navbarCollapse">
                 <ul class="navbar-nav mx-auto"><!--user this class to change color-navbar-nav-link-->
                     <li class="nav-item active">
-                        <a class="nav-link" href="#home">{{__('site.home')}}</a>
+                        <a class="nav-link" href="{{ request()->is(str_replace(' ', '-', $user->name)) ? '#home' : route('site.home',str_replace(' ', '-', $user->name)) }}">{{__('site.home')}}</a>
                     </li><!--end nav item-->
                     <li class="nav-item">
-                        <a class="nav-link" href="#about">{{__('site.about')}}</a>
+                        <a class="nav-link" href="{{ request()->is(str_replace(' ', '-', $user->name)) ? '#about' : route('site.home',str_replace(' ', '-', $user->name)).'#about' }}">{{__('site.about')}}</a>
                     </li><!--end nav item-->
                     <li class="nav-item">
-                        <a class="nav-link" href="#services">{{__('site.services')}}</a>
+                        <a class="nav-link" href="{{ request()->is(str_replace(' ', '-', $user->name)) ? '#services' : route('site.home',str_replace(' ', '-', $user->name)).'#services' }}">{{__('site.services')}}</a>
                     </li><!--end nav item-->
                     <li class="nav-item">
-                        <a class="nav-link" href="#resume">{{__('site.resume')}}</a>
+                        <a class="nav-link" href="{{ request()->is(str_replace(' ', '-', $user->name)) ? '#resume' : route('site.home',str_replace(' ', '-', $user->name)).'#resume' }}">{{__('site.resume')}}</a>
                     </li><!--end nav item-->
                     <li class="nav-item">
-                        <a class="nav-link" href="#projects">{{__('site.projects')}}</a>
+                        <a class="nav-link" href="{{ request()->is(str_replace(' ', '-', $user->name)) ? '#projects' : route('site.home',str_replace(' ', '-', $user->name)).'#projects' }}">{{__('site.projects')}}</a>
                     </li><!--end nav item-->
                     <li class="nav-item">
-                        <a class="nav-link" href="#contact">{{__('site.contact')}}</a>
+                        <a class="nav-link" href="{{ request()->is(str_replace(' ', '-', $user->name)) ? '#contact' : route('site.home',str_replace(' ', '-', $user->name)).'#contact' }}">{{__('site.contact')}}</a>
                     </li><!--end nav item-->
                 </ul>
 

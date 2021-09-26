@@ -21,6 +21,7 @@ class CreatePortfoliosTable extends Migration
             $table->string('desc_ar');
             $table->string('desc_en');
             $table->boolean('status');
+            $table->bigInteger('views')->unsigned()->default(0)->index();
             $table->timestamps();
 
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');

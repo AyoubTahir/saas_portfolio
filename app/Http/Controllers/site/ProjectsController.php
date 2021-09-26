@@ -5,6 +5,7 @@ namespace App\Http\Controllers\site;
 use App\Models\User;
 use App\Models\Project;
 use App\Http\Controllers\Controller;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\Session;
 
 class ProjectsController extends Controller
@@ -17,11 +18,9 @@ class ProjectsController extends Controller
                 'settings',
             )->firstOrFail();
 
-        if (!$user->categories && !$user->settings) {
+        if (!$user->categories || !$user->projects || !$user->settings || !$user->portfolio->status) {
             return abort(404);
         }
-
-        Project::where('user_id', $user->id)->firstOrFail();
 
         $currentLang = Session::get('currentLang');
 
@@ -41,6 +40,13 @@ class ProjectsController extends Controller
         $currentLang = Session::get('currentLang');
 
         $lang = $currentLang ? $currentLang : 'en';
+
+        if (!Cookie::get('project_' . $project->id . '_display')) {
+
+            Cookie::queue('project_' . $project->id . '_display', '1', 60);
+
+            $project->incrementViewsCount();
+        }
 
         return view('site.projects.show', compact(['project', 'lang', 'user']));
     }

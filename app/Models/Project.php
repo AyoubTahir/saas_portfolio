@@ -58,4 +58,12 @@ class Project extends Model implements SaveableInterface
 
         return $this->where('id', '<', $this->id)->where('user_id', $user_id)->orderBy('id', 'desc')->first();
     }
+
+    public function incrementViewsCount()
+    {
+
+        $this->views++;
+
+        return $this->save();
+    }
 }

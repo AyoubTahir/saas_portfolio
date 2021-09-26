@@ -36,7 +36,7 @@
                         <h3 class="heading text-light title-dark mt-3">{{ $user->hero['title_'.$lang] }} <span class="element text-primary" data-elements="{{ $user->hero['job_'.$lang] }}"></span></h3>
                         <p class="para-desc mx-auto text-white-50">{{ $user->hero['description_'.$lang] }}</p>
                         <div class="mt-4">
-                            <a href="javascript:void(0)" class="btn btn-primary rounded">{{ $user->hero['button_'.$lang] }}</a>
+                            <a href="#contact" class="btn btn-primary rounded">{{ $user->hero['button_'.$lang] }}</a>
                         </div>
                     </div>
                 </div><!--end col-->
@@ -130,7 +130,7 @@
     <!-- About end -->
 
     <!-- Services Start -->
-    <section class="section bg-light" id="services" style="{{ $user->about && $user->service->status ? '' : 'display: none' }}">
+    <section class="section bg-light" id="services" style="{{ $user->service && $user->service->status ? '' : 'display: none' }}">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
@@ -170,7 +170,7 @@
     <!-- Services End -->
 
     <!-- Resume Start -->
-    <section class="section" id="resume" style="{{ $user->about && $user->resume->status ? '' : 'display: none' }}">
+    <section class="section" id="resume" style="{{ $user->resume && $user->resume->status ? '' : 'display: none' }}">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
@@ -230,7 +230,7 @@
     <!-- Skill End -->
 
     <!-- Skill & CTA START -->
-    <section class="cta-full border-top">
+    <section class="cta-full border-top" style="{{ $user->expertise && $user->expertise->status ? '' : 'display: none' }}">
         <div class="container-fluid">
             <div class="row position-relative">
                 <div class="col-lg-4 padding-less img" style="background-image:url('{{ asset('uploads/'. $user->expertise->image) }}')" data-jarallax='{"speed": 0.5}'></div><!-- end col -->
@@ -291,7 +291,7 @@
 
     @if ($user->portfolio)
     <!-- Projects Start -->
-    <section class="section bg-light" id="projects">
+    <section class="section bg-light" id="projects" style="{{ $user->portfolio && $user->portfolio->status ? '' : 'display: none' }}">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
@@ -337,7 +337,7 @@
                                             </div>
                                         </div>
                                         <div class="gallary-title py-4 text-center">
-                                            <h5><a href="{{url()->current().'/project'.'/'.$project->id}}" class="title text-dark">{{ $project['title_'.$lang] }}</a></h5>
+                                            <h5><a href="{{url()->current().'/projects'.'/'.$project->id}}" class="title text-dark">{{ $project['title_'.$lang] }}</a></h5>
                                             <span>{{ $category['name_'.$lang]}}</span>
                                         </div>
                                     </div>
@@ -362,7 +362,7 @@
     @endif
 
     <!-- Testimonial Start -->
-    <section class="cta-full">
+    <section class="cta-full" style="{{ $user->clients && $user->clients->status ? '' : 'display: none' }}">
         <div class="container-fluid">
             <div class="row position-relative">
                 <div class="col-lg-8 order-2">
@@ -429,7 +429,7 @@
     <!-- Testimonial End -->
 
     <!-- Contact Start -->
-    <section class="section pb-0" id="contact">
+    <section class="section pb-0" id="contact" style="{{ $user->contact && $user->contact->status ? '' : 'display: none' }}">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-12 text-center">
@@ -494,7 +494,7 @@
         </div><!--end container-->
     </section><!--end section-->
 
-    <section class="section pt-5 mt-3">
+    <section class="section pt-5 mt-3" style="{{ $user->contact && $user->contact->status ? '' : 'display: none' }}">
         <div class="container">
             <div class="row justify-content-center">
                 <div class="col-lg-12">
