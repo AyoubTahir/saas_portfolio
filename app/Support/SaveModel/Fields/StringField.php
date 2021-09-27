@@ -6,7 +6,7 @@ use App\Support\SaveModel\Fields\Field;
 
 class StringField extends Field
 {
-    public function execute(): mixed
+    public function execute()
     {
         return $this->value;
     }

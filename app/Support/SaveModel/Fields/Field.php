@@ -6,41 +6,41 @@ use Illuminate\Database\Eloquent\Model;
 
 abstract class Field
 {
-    protected mixed $value;
+    protected $value;
 
     protected string $column;
 
     protected Model $model;
 
-    abstract public function execute(): mixed;
+    abstract public function execute();
 
-    public static function new(): static
+    public static function new()
     {
         return new static();
     }
 
-    public function setValue($value): static
+    public function setValue($value)
     {
         $this->value = $value;
 
         return $this;
     }
 
-    public function onColumn(string $column): static
+    public function onColumn(string $column)
     {
         $this->column = $column;
 
         return $this;
     }
 
-    public function ofModel(Model $model): static
+    public function ofModel(Model $model)
     {
         $this->model = $model;
 
         return $this;
     }
 
-    public function isUpdateMode(): bool
+    public function isUpdateMode()
     {
         return $this->model->exists;
     }

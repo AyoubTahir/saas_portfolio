@@ -7,7 +7,7 @@ use Carbon\Carbon;
 
 class DateTimeField extends Field
 {
-    public function execute(): mixed
+    public function execute()
     {
         if (!$this->value) {
             return $this->value;

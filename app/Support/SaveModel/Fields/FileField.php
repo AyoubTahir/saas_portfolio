@@ -18,7 +18,7 @@ class FileField extends Field
 
     private bool $uploadAsOriginalName = false;
 
-    public function execute(): mixed
+    public function execute()
     {
         if (!$this->value) {
             return $this->value;

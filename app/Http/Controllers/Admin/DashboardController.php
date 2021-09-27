@@ -15,6 +15,14 @@ class DashboardController extends Controller
             User::where('id', Auth::user()->id)->update(['first_time' => 0]);
         }
 
+        //return $user = Auth::user()->portfolio->views;
+
+        //return $user = Auth::user()->projects->count();
+
+        //return $user = Auth::user()->projects->sum('views');
+
+        //return $user = Auth::user()->categories->count();
+
         return view('admin.dashboard.index');
     }
 }

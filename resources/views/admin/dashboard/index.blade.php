@@ -28,11 +28,11 @@
                 <div class="widget  t-sales-widget">
                     <div class="media">
                         <div class="icon ml-2">
-                            <i class="flaticon-line-chart"></i>
+                            <i class="flaticon-view"></i>
                         </div>
                         <div class="media-body text-right">
                             <p class="widget-text mb-0">Total Portfolio Views</p>
-                            <p class="widget-numeric-value">9</p>
+                            <p class="widget-numeric-value">{{ Auth::user()->portfolio->views }}</p>
                         </div>
                     </div>
                 </div>
@@ -44,11 +44,11 @@
                 <div class="widget  t-order-widget">
                     <div class="media">
                         <div class="icon ml-2">
-                            <i class="flaticon-cart-bag"></i>
+                            <i class="flaticon-view"></i>
                         </div>
                         <div class="media-body text-right">
                             <p class="widget-text mb-0">Total Projects Views</p>
-                            <p class="widget-numeric-value">5</p>
+                            <p class="widget-numeric-value">{{ Auth::user()->projects->sum('views') }}</p>
                         </div>
                     </div>
                 </div>
@@ -60,11 +60,11 @@
                 <div class="widget  t-customer-widget">
                     <div class="media">
                         <div class="icon ml-2">
-                            <i class="flaticon-user-11"></i>
+                            <i class="flaticon-idea-bulb"></i>
                         </div>
                         <div class="media-body text-right">
                             <p class="widget-text mb-0">Total Projects</p>
-                            <p class="widget-numeric-value">12</p>
+                            <p class="widget-numeric-value">{{ Auth::user()->projects->count() }}</p>
                         </div>
                     </div>
                 </div>
@@ -77,11 +77,11 @@
                 <div class="widget  t-income-widget">
                     <div class="media">
                         <div class="icon ml-2">
-                            <i class="flaticon-money"></i>
+                            <i class="flaticon-package"></i>
                         </div>
                         <div class="media-body text-right">
                             <p class="widget-text mb-0">Total Categories</p>
-                            <p class="widget-numeric-value">0</p>
+                            <p class="widget-numeric-value">{{ Auth::user()->categories->count() }}</p>
                         </div>
                     </div>
                 </div>
@@ -116,29 +116,32 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td>
-                                        <img src="{{asset('assets/admin/assets/img/90x90.jpg')}}" class="img-fluid" alt="img-1" style="border-color: #3862f5;">
-                                    </td>
-                                    <td>Camera</td>
-                                    <td>#0001</td>
-                                    <td><span class="badge badge-info badge-pill">Simple</span></td>
-                                    <td class="text-center">1</td>
-                                    <td class="text-center">Google</td>
-                                </tr>
+                                @if (Auth::user()->projects)
+                                    @foreach (Auth::user()->projects as $project )
+                                        <tr>
+                                            <td>
+                                                <img src="{{asset('uploads/'.$project->thumbnail)}}" class="img-fluid" alt="img-1" style="border-color: #3862f5;">
+                                            </td>
+                                            <td>{{ $project->title_en }} - {{ $project->title_ar }}</td>
+                                            <td>{{ $project->category->name_en }} - {{ $project->category->name_ar }}</td>
+                                            @if ($project->views <= 10)
+                                                {{$badg = 'info'}}
+                                                {{$lvl = 'Low'}}
+                                            @elseif ($project->views > 10 && $project->views <= 50 )
+                                                {{$badg = 'success'}}
+                                                {{$lvl = 'Medium'}}
+                                            @else
+                                                {{$badg = 'danger'}}
+                                                {{$lvl = 'Hot'}}
+                                            @endif
+                                            <td><span class="badge badge-{{$badg}} badge-pill">{{$lvl}}</span></td>
+                                            <td class="text-center">{{ $project->views }}</td>
+                                            <td class="text-center"><a href="{{ $project->website }}" target="_blank">Visit</a></td>
+                                        </tr>
+                                    @endforeach
+                                @endif
                             </tbody>
                         </table>
-                    </div>
-                    <div class="pagination-section">
-                        <ul class="pagination pagination-style-1 pagination-rounded justify-content-end mt-3 mb-3">
-                            <li><a href="javascript:void(0);">«</a></li>
-                            <li><a href="javascript:void(0);">1</a></li>
-                            <li><a href="javascript:void(0);">2</a></li>
-                            <li><a href="javascript:void(0);">3</a></li>
-                            <li><a href="javascript:void(0);">4</a></li>
-                            <li><a href="javascript:void(0);">5</a></li>
-                            <li><a href="javascript:void(0);">»</a></li>
-                        </ul>
                     </div>
                 </div>
             </div>

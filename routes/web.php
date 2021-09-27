@@ -11,8 +11,8 @@ use App\Http\Controllers\site\LanguageController;
 use App\Http\Controllers\site\ProjectsController;
 use App\Http\Controllers\Admin\CategoryController;
 use App\Http\Controllers\Admin\SettingsController;
-use App\Http\Controllers\admin\DashboardController;
-use App\Http\Controllers\admin\HeroSectionController;
+use App\Http\Controllers\Admin\DashboardController;
+use App\Http\Controllers\Admin\HeroSectionController;
 use App\Http\Controllers\Admin\AboutSectionController;
 use App\Http\Controllers\Admin\FactsSectionController;
 use App\Http\Controllers\Admin\ClientsSectionController;
@@ -23,12 +23,13 @@ use App\Http\Controllers\Admin\PortfolioSectionController;
 use App\Http\Controllers\Admin\ExpertisesSectionController;
 
 //site
-Route::get('/lang', [LanguageController::class, 'switchLang']);
-Route::get('/{username}', [HomeController::class, 'index'])->name('site.home');
-Route::get('/{username}/projects', [ProjectsController::class, 'index'])->name('site.porojects');
-Route::get('/{username}/projects/{id}', [ProjectsController::class, 'show'])->name('site.porojects.show');
-Route::post('/message/store/{user_id}', [MessageController::class, 'store'])->name('message.store');
-
+Route::middleware('isWebsiteActive')->group(function () {
+    Route::get('/lang', [LanguageController::class, 'switchLang']);
+    Route::get('/{username}', [HomeController::class, 'index'])->name('site.home');
+    Route::get('/{username}/projects', [ProjectsController::class, 'index'])->name('site.porojects');
+    Route::get('/{username}/projects/{id}', [ProjectsController::class, 'show'])->name('site.porojects.show');
+    Route::post('/message/store/{user_id}', [MessageController::class, 'store'])->name('message.store');
+});
 //admin
 Route::prefix('t-admin')->middleware('auth')->group(function () {
 
@@ -125,6 +126,7 @@ Route::prefix('t-admin')->middleware('auth')->group(function () {
     //settings
     Route::get('/settings', [SettingsController::class, 'index'])->name('settings.index');
     Route::post('/settings/update', [SettingsController::class, 'update'])->name('settings.update');
+    Route::post('/settings/profile/update', [SettingsController::class, 'updateProfile'])->name('settings.profile.update');
 
     //contact
     Route::get('/contact', [ContactController::class, 'index'])->name('contact.index');

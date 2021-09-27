@@ -90,7 +90,7 @@ class User extends Authenticatable implements SaveableInterface
     }
     public function portfolio()
     {
-        return $this->hasOne(portfolio::class, 'user_id', 'id');
+        return $this->hasOne(Portfolio::class, 'user_id', 'id');
     }
     public function categories()
     {

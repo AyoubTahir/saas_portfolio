@@ -30,7 +30,10 @@
         #sidebar .navbar-brand .img-fluid {
             width: 70px !important;
             margin-left: 8px !important;
-            margin-top: 25px !important;
+            margin-top: 20px !important;
+        }
+        header.tabMobileView img {
+            margin-top: 18px !important;
         }
     </style>
 
