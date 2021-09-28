@@ -23,8 +23,10 @@ use App\Http\Controllers\Admin\PortfolioSectionController;
 use App\Http\Controllers\Admin\ExpertisesSectionController;
 
 //site
+
+Route::get('/lang', [LanguageController::class, 'switchLang']);
+
 Route::middleware('isWebsiteActive')->group(function () {
-    Route::get('/lang', [LanguageController::class, 'switchLang']);
     Route::get('/{username}', [HomeController::class, 'index'])->name('site.home');
     Route::get('/{username}/projects', [ProjectsController::class, 'index'])->name('site.porojects');
     Route::get('/{username}/projects/{id}', [ProjectsController::class, 'show'])->name('site.porojects.show');
