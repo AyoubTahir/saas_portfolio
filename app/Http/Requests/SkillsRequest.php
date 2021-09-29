@@ -24,10 +24,10 @@ class SkillsRequest extends FormRequest
     public function rules()
     {
         return [
-            'expertise_field_id' => 'required',
-            'skill_ar' => 'required',
-            'skill_en' => 'required',
-            'lvl' => 'required|integer'
+            'expertise_field_id'    => 'required',
+            'skill_ar'              => 'required|max:150',
+            'skill_en'              => 'required|max:150',
+            'lvl'                   => 'required|integer'
         ];
     }
 }

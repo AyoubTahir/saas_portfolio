@@ -32,7 +32,7 @@
                         </div>
                         <div class="media-body text-right">
                             <p class="widget-text mb-0">Total Portfolio Views</p>
-                            <p class="widget-numeric-value">{{ Auth::user()->portfolio->views }}</p>
+                            <p class="widget-numeric-value">{{ Auth::user()->portfolio ? Auth::user()->portfolio->views : '0' }}</p>
                         </div>
                     </div>
                 </div>
@@ -48,7 +48,7 @@
                         </div>
                         <div class="media-body text-right">
                             <p class="widget-text mb-0">Total Projects Views</p>
-                            <p class="widget-numeric-value">{{ Auth::user()->projects->sum('views') }}</p>
+                            <p class="widget-numeric-value">{{ Auth::user()->projects ? Auth::user()->projects->sum('views') : '0' }}</p>
                         </div>
                     </div>
                 </div>
@@ -64,7 +64,7 @@
                         </div>
                         <div class="media-body text-right">
                             <p class="widget-text mb-0">Total Projects</p>
-                            <p class="widget-numeric-value">{{ Auth::user()->projects->count() }}</p>
+                            <p class="widget-numeric-value">{{ Auth::user()->projects ? Auth::user()->projects->count() : '0' }}</p>
                         </div>
                     </div>
                 </div>
@@ -81,7 +81,7 @@
                         </div>
                         <div class="media-body text-right">
                             <p class="widget-text mb-0">Total Categories</p>
-                            <p class="widget-numeric-value">{{ Auth::user()->categories->count() }}</p>
+                            <p class="widget-numeric-value">{{ Auth::user()->projects ? Auth::user()->categories->count() : '0' }}</p>
                         </div>
                     </div>
                 </div>

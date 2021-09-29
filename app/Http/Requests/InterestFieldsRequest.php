@@ -24,9 +24,9 @@ class InterestFieldsRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_ar'           => 'required',
-            'name_en'           => 'required',
-            'icon'              => 'required',
+            'name_ar'           => 'required|max:150',
+            'name_en'           => 'required|max:150',
+            'icon'              => 'required|max:50',
         ];
     }
 }

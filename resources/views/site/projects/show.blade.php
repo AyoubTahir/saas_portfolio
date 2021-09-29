@@ -129,49 +129,6 @@
                 </div><!--end col-->
             </div>
         </div><!--end container-->
-
-        <div class="container mt-100 mt-60">
-            <div class="row">
-                <div class="col-md-4">
-                    <div class="contact-detail text-center">
-                        <div class="icon">
-                            <i data-feather="phone" class="fea icon-md"></i>
-                        </div>
-                        <div class="content mt-4">
-                            <h5 class="title text-uppercase">Phone</h5>
-                            <p class="text-muted">Promising development turmoil inclusive education transformative community</p>
-                            <a href="tel:+152534-468-854" class="text-primary">+152 534-468-854</a>
-                        </div>
-                    </div>
-                </div><!--end col-->
-
-                <div class="col-md-4 mt-4 mt-md-0 pt-2 pt-md-0">
-                    <div class="contact-detail text-center">
-                        <div class="icon">
-                            <i data-feather="mail" class="fea icon-md"></i>
-                        </div>
-                        <div class="content mt-4">
-                            <h5 class="title text-uppercase">Email</h5>
-                            <p class="text-muted">Promising development turmoil inclusive education transformative community</p>
-                            <a href="mailto:contact@example.com" class="text-primary">contact@example.com</a>
-                        </div>
-                    </div>
-                </div><!--end col-->
-
-                <div class="col-md-4 mt-4 mt-sm-0 pt-2 pt-sm-0">
-                    <div class="contact-detail text-center">
-                        <div class="icon">
-                            <i data-feather="map-pin" class="fea icon-md"></i>
-                        </div>
-                        <div class="content mt-4">
-                            <h5 class="title text-uppercase">Location</h5>
-                            <p class="text-muted">C/54 Northwest Freeway, Suite 558, <br>Houston, USA 485</p>
-                            <a href="https://www.google.com/maps/embed?pb=!1m10!1m8!1m3!1d6030.418742494061!2d-111.34563870463673!3d26.01036670629853!3m2!1i1024!2i768!4f13.1!5e0!3m2!1ses-419!2smx!4v1471908546569" class="video-play-icon text-primary">View on Google map</a>
-                        </div>
-                    </div>
-                </div><!--end col-->
-            </div><!--end row-->
-        </div><!--end container-->
     </section><!--end section-->
     <!-- Contact End -->
 

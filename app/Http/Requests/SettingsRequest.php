@@ -24,11 +24,11 @@ class SettingsRequest extends FormRequest
     public function rules()
     {
         return [
-            'website_name_ar'       => 'required',
-            'website_name_en'       => 'required',
-            'footer_desc_ar'        => 'required',
-            'footer_desc_en'        => 'required',
-            'theme_mode'            => 'required',
+            'website_name_ar'       => 'required|max:150',
+            'website_name_en'       => 'required|max:150',
+            'footer_desc_ar'        => 'required|max:200',
+            'footer_desc_en'        => 'required|max:200',
+            'theme_mode'            => 'required|max:150',
             'website_status'        => 'required'
         ];
     }

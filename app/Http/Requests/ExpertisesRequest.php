@@ -24,10 +24,10 @@ class ExpertisesRequest extends FormRequest
     public function rules()
     {
         return [
-            'title_ar'          => 'required',
-            'title_en'          => 'required',
-            'description_ar'    => 'required',
-            'description_en'    => 'required',
+            'title_ar'          => 'required|max:150',
+            'title_en'          => 'required|max:150',
+            'description_ar'    => 'required|max:200',
+            'description_en'    => 'required|max:200',
             'status'            => 'required',
         ];
     }

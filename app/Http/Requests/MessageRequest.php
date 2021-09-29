@@ -28,9 +28,9 @@ class MessageRequest extends FormRequest
         $this->redirect = "/" . str_replace(' ', '-', $this->username) . "#contact";
 
         return [
-            'full_name'         => 'required',
-            'email'             => 'required',
-            'subject'           => 'required',
+            'full_name'         => 'required|max:150',
+            'email'             => 'required|email|max:150',
+            'subject'           => 'required|max:150',
             'message'           => 'required',
         ];
     }

@@ -24,10 +24,10 @@ class ServicesFieldsRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_ar' => 'required',
-            'name_en' => 'required',
-            'desc_ar' => 'required',
-            'desc_en' => 'required',
+            'name_ar' => 'required|max:150',
+            'name_en' => 'required|max:150',
+            'desc_ar' => 'required|max:200',
+            'desc_en' => 'required|max:200',
             'icon' => 'required',
         ];
     }

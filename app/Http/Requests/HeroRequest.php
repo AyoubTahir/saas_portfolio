@@ -24,14 +24,14 @@ class HeroRequest extends FormRequest
     public function rules()
     {
         return [
-            'title_ar'          => 'required',
-            'title_en'          => 'required',
-            'job_ar'            => 'required',
-            'job_en'            => 'required',
-            'description_ar'    => 'required',
-            'description_en'    => 'required',
-            'button_ar'         => 'required',
-            'button_en'         => 'required',
+            'title_ar'          => 'required|max:150',
+            'title_en'          => 'required|max:150',
+            'job_ar'            => 'required|max:150',
+            'job_en'            => 'required|max:150',
+            'description_ar'    => 'required|max:200',
+            'description_en'    => 'required|max:200',
+            'button_ar'         => 'required|max:50',
+            'button_en'         => 'required|max:50',
         ];
     }
 }

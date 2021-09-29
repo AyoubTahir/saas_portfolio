@@ -24,16 +24,16 @@ class ClientsFieldsRequest extends FormRequest
     public function rules()
     {
         return [
-            'project_ar'    => 'required',
-            'project_en'    => 'required',
-            'name_ar'       => 'required',
-            'name_en'       => 'required',
-            'job_ar'        => 'required',
-            'job_en'        => 'required',
+            'project_ar'    => 'required|max:150',
+            'project_en'    => 'required|max:150',
+            'name_ar'       => 'required|max:150',
+            'name_en'       => 'required|max:150',
+            'job_ar'        => 'required|max:150',
+            'job_en'        => 'required|max:150',
             'opinion_ar'    => 'required',
             'opinion_en'    => 'required',
             'rating'        => 'required|integer',
-            'image'         => 'required',
+            'image'         => 'required|max:200',
         ];
     }
 }

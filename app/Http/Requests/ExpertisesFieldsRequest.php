@@ -24,8 +24,8 @@ class ExpertisesFieldsRequest extends FormRequest
     public function rules()
     {
         return [
-            'name_ar' => 'required',
-            'name_en' => 'required',
+            'name_ar' => 'required|max:150',
+            'name_en' => 'required|max:150',
         ];
     }
 }

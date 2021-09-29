@@ -430,9 +430,11 @@
                             <div class="form-group">
                                 <label for="expertise">Expertises</label>
                                 <select class="form-control" name="expertise_field_id" id="expertise">
-                                    @foreach ($expertise->expertisesField as $field)
-                                        <option value="{{$field->id}}">{{$field->name_ar}} - {{$field->name_en}}</option>
-                                    @endforeach
+                                    @if ($expertise && $expertise->expertisesField)
+                                        @foreach ($expertise->expertisesField as $field)
+                                            <option value="{{$field->id}}">{{$field->name_ar}} - {{$field->name_en}}</option>
+                                        @endforeach
+                                    @endif
                                 </select>
                                 @error('status')
                                     <span class="invalid-feedback" style="display: inline-block" role="alert">

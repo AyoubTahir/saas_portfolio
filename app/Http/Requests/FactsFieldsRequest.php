@@ -24,10 +24,10 @@ class FactsFieldsRequest extends FormRequest
     public function rules()
     {
         return [
-            'title_ar'          => 'required',
-            'title_en'          => 'required',
+            'title_ar'          => 'required|max:150',
+            'title_en'          => 'required|max:150',
             'number'            => 'required|numeric',
-            'icon'              => 'required',
+            'icon'              => 'required|max:50',
         ];
     }
 }

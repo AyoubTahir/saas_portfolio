@@ -24,9 +24,9 @@ class FactsRequest extends FormRequest
     public function rules()
     {
         return [
-            'title_ar'          => 'required',
-            'title_en'          => 'required',
-            'cover'             => 'mimes:png,jpg',
+            'title_ar'          => 'required|max:150',
+            'title_en'          => 'required|max:150',
+            'cover'             => 'mimes:png,jpg|max:200',
             'status'            => 'required',
         ];
     }
